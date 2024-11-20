@@ -153,6 +153,40 @@ exit_rect = exit_btn.get_rect()
 exit_rect.x = WIDTH // 2 - (278//2)
 exit_rect.y = HEIGHT // 2 + 150
 
+# песни альбома "Камнем по голове"
+sudden_head_img = pygame.image.load('Камнем по голове/Внезапная голова.png')
+sudden_head_img = pygame.transform.scale(sudden_head_img, [100, 100])
+sudden_head_rect = sudden_head_img.get_rect()
+sudden_head_rect.x = 300
+sudden_head_rect.y = 150
+
+fool_and_lightning = pygame.image.load('Камнем по голове/дурак и молния.png')
+fool_and_lightning = pygame.transform.scale(fool_and_lightning, [100, 100])
+fool_and_lightning_rect = fool_and_lightning.get_rect()
+fool_and_lightning_rect.x = WIDTH-400
+fool_and_lightning_rect.y = 150
+
+
+villain_and_hat = pygame.image.load('Камнем по голове/Злодей и Шапка.png')
+villain_and_hat = pygame.transform.scale(villain_and_hat, [100, 100])
+villain_and_hat_rect = fool_and_lightning.get_rect()
+villain_and_hat_rect.x = 550
+villain_and_hat_rect.y = 150
+
+# песни из Акустического альбома
+
+puppet_of_wizard = pygame.image.load('Акустический альбом/кукла колдуна.png')
+puppet_of_wizard = pygame.transform.scale(puppet_of_wizard, [100, 100])
+puppet_of_wizard_rect = puppet_of_wizard.get_rect()
+puppet_of_wizard_rect.x = 300
+puppet_of_wizard_rect.y = 150
+
+morning_dawn = pygame.image.load('Акустический альбом/утренний рассвет.png')
+morning_dawn = pygame.transform.scale(morning_dawn, [100, 100])
+morning_dawn_rect = morning_dawn.get_rect()
+morning_dawn_rect.x = 550
+morning_dawn_rect.y = 150
+
 map = [
     '                            ',
     '                            ',  
@@ -308,11 +342,10 @@ run = False
 frame = 0
 show = True
 while True:
-    if show:
+    if show == True:
         window.blit(background, [0,0])
     
-    man_old = man_rect.copy()
-        
+    man_old = man_rect.copy()    
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             exit()
@@ -350,7 +383,6 @@ while True:
             exit()
 
     elif main_menu == False:
-        show = False
         window.blit(choice2, [0, 0])
         window.blit(alb1_img, alb1_rect)
         window.blit(alb2_img, alb2_rect)
@@ -364,7 +396,12 @@ while True:
         pos = pygame.mouse.get_pos()
         # альбом камнем по голове
         if alb1_rect.collidepoint(pos) and pygame.mouse.get_pressed()[0] == True:
-            window.blit(background1, [0, 0])
+            window.blit(choice, [0, 0])
+            window.blit(sudden_head_img, sudden_head_rect)
+            window.blit(villain_and_hat, villain_and_hat_rect)
+            window.blit(fool_and_lightning, fool_and_lightning_rect) # во второй бетке)))
+            """window.blit(background1, [0, 0])
+            
             for i in range(len(map_now)):
                 for j in range(len(map_now[i])):
                     
@@ -382,10 +419,13 @@ while True:
                         dirt_rect.y = dirt_rect.height * i + testy
                         dirts.append(dirt_rect)
                         window.blit(dirt_img, dirt_rect)    
-            man_rect.x += change_x
+            man_rect.x += change_x"""
         # акустический альбом    
         elif alb2_rect.collidepoint(pos) and pygame.mouse.get_pressed()[0] == True:
-            window.blit(background2, [0, 0])
+            window.blit(choice, [0, 0])
+            window.blit(puppet_of_wizard, puppet_of_wizard_rect)
+            window.blit(morning_dawn, morning_dawn_rect)
+            '''window.blit(background2, [0, 0])
             for i in range(len(map_now)):
                 for j in range(len(map_now[i])):
                     map_now = map2
@@ -402,10 +442,11 @@ while True:
                         dirt_rect.y = dirt_rect.height * i + testy
                         dirts.append(dirt_rect)
                         window.blit(dirt_img, dirt_rect)    
-            man_rect.x += change_x
+            man_rect.x += change_x'''
         # альбом будь как дома путник
         elif alb3_rect.collidepoint(pos) and pygame.mouse.get_pressed()[0] == True:
-            window.blit(background5, [0, 0])
+            window.blit(choice, [0, 0])
+            '''window.blit(background5, [0, 0])
             for i in range(len(map_now)):
                 for j in range(len(map_now[i])):
                     map_now = map3
@@ -422,10 +463,11 @@ while True:
                         dirt_rect.y = dirt_rect.height * i + testy
                         dirts.append(dirt_rect)
                         window.blit(dirt_img, dirt_rect)    
-            man_rect.x += change_x        
+            man_rect.x += change_x   '''     
         # как в старой сказке
         elif alb4_rect.collidepoint(pos) and pygame.mouse.get_pressed()[0] == True:
-            window.blit(background, [0, 0])
+            window.blit(choice, [0, 0])
+            '''window.blit(background, [0, 0])
             for i in range(len(map_now)):
                 for j in range(len(map_now[i])):
                     map_now = map4
@@ -442,10 +484,11 @@ while True:
                         dirt_rect.y = dirt_rect.height * i + testy
                         dirts.append(dirt_rect)
                         window.blit(dirt_img, dirt_rect)    
-            man_rect.x += change_x      
+            man_rect.x += change_x   '''   
         # альбом жаль нет ружья  
         elif alb5_rect.collidepoint(pos) and pygame.mouse.get_pressed()[0] == True:
-            window.blit(background, [0, 0])
+            window.blit(choice, [0, 0])
+            '''window.blit(background, [0, 0])
             for i in range(len(map_now)):
                 for j in range(len(map_now[i])):
                     map_now = map5
@@ -462,10 +505,11 @@ while True:
                         dirt_rect.y = dirt_rect.height * i + testy
                         dirts.append(dirt_rect)
                         window.blit(dirt_img, dirt_rect)    
-            man_rect.x += change_x        
+            man_rect.x += change_x     '''   
         # альбом бунт на корабле
         elif alb6_rect.collidepoint(pos) and pygame.mouse.get_pressed()[0] == True:
-            window.blit(background, [0, 0])
+            window.blit(choice, [0, 0])
+            '''window.blit(background, [0, 0])
             for i in range(len(map_now)):
                 for j in range(len(map_now[i])):
                     map_now = map6
@@ -482,10 +526,11 @@ while True:
                         dirt_rect.y = dirt_rect.height * i + testy
                         dirts.append(dirt_rect)
                         window.blit(dirt_img, dirt_rect)    
-            man_rect.x += change_x    
+            man_rect.x += change_x    '''
         # альбом продавец кошмаров
         elif alb7_rect.collidepoint(pos) and pygame.mouse.get_pressed()[0] == True:
-            window.blit(background, [0, 0])
+            window.blit(choice, [0, 0])
+            '''window.blit(background, [0, 0])
             for i in range(len(map_now)):
                 for j in range(len(map_now[i])):
                     map_now = map7
@@ -502,10 +547,11 @@ while True:
                         dirt_rect.y = dirt_rect.height * i + testy
                         dirts.append(dirt_rect)
                         window.blit(dirt_img, dirt_rect)    
-            man_rect.x += change_x    
+            man_rect.x += change_x    '''
         # альбом тень клоуна
         elif alb8_rect.collidepoint(pos) and pygame.mouse.get_pressed()[0] == True:
-            window.blit(background, [0, 0])
+            window.blit(choice, [0, 0])
+            '''window.blit(background, [0, 0])
             for i in range(len(map_now)):
                 for j in range(len(map_now[i])):
                     map_now = map8
@@ -522,10 +568,11 @@ while True:
                         dirt_rect.y = dirt_rect.height * i + testy
                         dirts.append(dirt_rect)
                         window.blit(dirt_img, dirt_rect)    
-            man_rect.x += change_x        
+            man_rect.x += change_x '''       
         # альбом театръ демона
         elif alb9_rect.collidepoint(pos) and pygame.mouse.get_pressed()[0] == True:
-            window.blit(background, [0, 0])
+            window.blit(choice, [0, 0])
+            '''window.blit(background, [0, 0])
             for i in range(len(map_now)):
                 for j in range(len(map_now[i])):
                     map_now = map9
@@ -542,7 +589,7 @@ while True:
                         dirt_rect.y = dirt_rect.height * i + testy
                         dirts.append(dirt_rect)
                         window.blit(dirt_img, dirt_rect)    
-            man_rect.x += change_x    
+            man_rect.x += change_x    '''
 
 
     else:
