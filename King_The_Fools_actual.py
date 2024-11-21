@@ -187,6 +187,26 @@ morning_dawn_rect = morning_dawn.get_rect()
 morning_dawn_rect.x = 550
 morning_dawn_rect.y = 150
 
+# песни из альбома "Как в старой сказке" 
+
+two_monks = pygame.image.load('Как в старой сказке/Два монаха в одну ночь.png')
+two_monks = pygame.transform.scale(two_monks, [100, 100])
+two_monks_rect = two_monks.get_rect()
+two_monks_rect.x = 300
+two_monks_rect.y = 150
+
+damn_old_house = pygame.image.load('Как в старой сказке/Проклятый старый дом.png')
+damn_old_house = pygame.transform.scale(damn_old_house, [100, 100])
+damn_old_house_rect = damn_old_house.get_rect()
+damn_old_house_rect.x = WIDTH-400
+damn_old_house_rect.y = 150
+
+antique_clock = pygame.image.load('Как в старой сказке/Тайна хозяйки старинных часов.png')
+antique_clock = pygame.transform.scale(antique_clock, [100, 100])
+antique_clock_rect = antique_clock.get_rect()
+antique_clock_rect.x = 550
+antique_clock_rect.y = 150
+
 map = [
     '                            ',
     '                            ',  
@@ -467,6 +487,9 @@ while True:
         # как в старой сказке
         elif alb4_rect.collidepoint(pos) and pygame.mouse.get_pressed()[0] == True:
             window.blit(choice, [0, 0])
+            window.blit(two_monks, two_monks_rect)
+            window.blit(damn_old_house, damn_old_house_rect)
+            window.blit(antique_clock, antique_clock_rect)
             '''window.blit(background, [0, 0])
             for i in range(len(map_now)):
                 for j in range(len(map_now[i])):
