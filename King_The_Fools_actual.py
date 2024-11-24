@@ -111,6 +111,9 @@ menu = pygame.transform.scale(menu, [1200, 700])
 choice = pygame.image.load('choice.png')
 choice2 = pygame.image.load('choice2.png')
 
+comming_soon_img = pygame.image.load('comming soon.png')
+
+
 testy = 2
 test = 2
 
@@ -154,24 +157,44 @@ exit_rect.x = WIDTH // 2 - (278//2)
 exit_rect.y = HEIGHT // 2 + 150
 
 # песни альбома "Камнем по голове"
-sudden_head_img = pygame.image.load('Камнем по голове/Внезапная голова.png')
-sudden_head_img = pygame.transform.scale(sudden_head_img, [100, 100])
-sudden_head_rect = sudden_head_img.get_rect()
-sudden_head_rect.x = 300
-sudden_head_rect.y = 150
 
 fool_and_lightning = pygame.image.load('Камнем по голове/дурак и молния.png')
 fool_and_lightning = pygame.transform.scale(fool_and_lightning, [100, 100])
 fool_and_lightning_rect = fool_and_lightning.get_rect()
-fool_and_lightning_rect.x = WIDTH-400
+fool_and_lightning_rect.x = 300
 fool_and_lightning_rect.y = 150
 
+sudden_head_img = pygame.image.load('Камнем по голове/Внезапная голова.png')
+sudden_head_img = pygame.transform.scale(sudden_head_img, [100, 100])
+sudden_head_rect = sudden_head_img.get_rect()
+sudden_head_rect.x = WIDTH-400
+sudden_head_rect.y = 150
 
 villain_and_hat = pygame.image.load('Камнем по голове/Злодей и Шапка.png')
 villain_and_hat = pygame.transform.scale(villain_and_hat, [100, 100])
 villain_and_hat_rect = fool_and_lightning.get_rect()
 villain_and_hat_rect.x = 550
 villain_and_hat_rect.y = 150
+
+# песни альбома "Будь как дома путник"
+
+forester_img = pygame.image.load("Будь как дома путник/Лесник.png")
+forester_img = pygame.transform.scale(forester_img, [100, 100])
+forester_img_rect = forester_img.get_rect()
+forester_img_rect.x = 300
+forester_img_rect.y = 150
+
+hunter_img = pygame.image.load("Будь как дома путник/Охотник.png")
+hunter_img = pygame.transform.scale(hunter_img, [100, 100])
+hunter_img_rect = hunter_img.get_rect()
+hunter_img_rect.x = WIDTH-400
+hunter_img_rect.y = 150
+
+meeting_img = pygame.image.load("Будь как дома путник/Собрание.png")
+meeting_img = pygame.transform.scale(meeting_img, [100, 100])
+meeting_img_rect = meeting_img.get_rect()
+meeting_img_rect.x = 550
+meeting_img_rect.y = 150
 
 # песни из Акустического альбома
 
@@ -361,6 +384,7 @@ map_now = map
 run = False
 frame = 0
 show = True
+
 while True:
     if show == True:
         window.blit(background, [0,0])
@@ -466,6 +490,9 @@ while True:
         # альбом будь как дома путник
         elif alb3_rect.collidepoint(pos) and pygame.mouse.get_pressed()[0] == True:
             window.blit(choice, [0, 0])
+            window.blit(forester_img, forester_img_rect)
+            window.blit(hunter_img, hunter_img_rect)
+            window.blit(meeting_img, meeting_img_rect)
             '''window.blit(background5, [0, 0])
             for i in range(len(map_now)):
                 for j in range(len(map_now[i])):
@@ -510,7 +537,7 @@ while True:
             man_rect.x += change_x   '''   
         # альбом жаль нет ружья  
         elif alb5_rect.collidepoint(pos) and pygame.mouse.get_pressed()[0] == True:
-            window.blit(choice, [0, 0])
+            window.blit(comming_soon_img, [0, 0])
             '''window.blit(background, [0, 0])
             for i in range(len(map_now)):
                 for j in range(len(map_now[i])):
@@ -531,7 +558,7 @@ while True:
             man_rect.x += change_x     '''   
         # альбом бунт на корабле
         elif alb6_rect.collidepoint(pos) and pygame.mouse.get_pressed()[0] == True:
-            window.blit(choice, [0, 0])
+            window.blit(comming_soon_img, [0, 0])
             '''window.blit(background, [0, 0])
             for i in range(len(map_now)):
                 for j in range(len(map_now[i])):
@@ -552,7 +579,7 @@ while True:
             man_rect.x += change_x    '''
         # альбом продавец кошмаров
         elif alb7_rect.collidepoint(pos) and pygame.mouse.get_pressed()[0] == True:
-            window.blit(choice, [0, 0])
+            window.blit(comming_soon_img, [0, 0])
             '''window.blit(background, [0, 0])
             for i in range(len(map_now)):
                 for j in range(len(map_now[i])):
@@ -573,7 +600,7 @@ while True:
             man_rect.x += change_x    '''
         # альбом тень клоуна
         elif alb8_rect.collidepoint(pos) and pygame.mouse.get_pressed()[0] == True:
-            window.blit(choice, [0, 0])
+            window.blit(comming_soon_img, [0, 0])
             '''window.blit(background, [0, 0])
             for i in range(len(map_now)):
                 for j in range(len(map_now[i])):
@@ -594,7 +621,7 @@ while True:
             man_rect.x += change_x '''       
         # альбом театръ демона
         elif alb9_rect.collidepoint(pos) and pygame.mouse.get_pressed()[0] == True:
-            window.blit(choice, [0, 0])
+            window.blit(comming_soon_img, [0, 0])
             '''window.blit(background, [0, 0])
             for i in range(len(map_now)):
                 for j in range(len(map_now[i])):
