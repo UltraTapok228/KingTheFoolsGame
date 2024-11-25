@@ -146,15 +146,24 @@ start_rect = start_btn.get_rect()
 start_rect.x = WIDTH // 2 - (278//2)
 start_rect.y = HEIGHT // 2 + 50
 
-#start_rect.x = WIDTH // 2 - 474
-#start_rect.y = HEIGHT // 2 + 50
-
 # Кнопка выхода из игры
 exit_btn = pygame.image.load('exit.png')
 exit_btn = pygame.transform.scale(exit_btn, [278, 80])
 exit_rect = exit_btn.get_rect()
 exit_rect.x = WIDTH // 2 - (278//2)
-exit_rect.y = HEIGHT // 2 + 150
+exit_rect.y = HEIGHT // 2 + 250
+
+# Кнопка просмотра управления
+
+management_btn = pygame.image.load('management_btn.png')
+management_btn = pygame.transform.scale(management_btn, [278, 80])
+management_btn_rect = management_btn.get_rect()
+management_btn_rect.x = WIDTH // 2 - (278//2)
+management_btn_rect.y = HEIGHT // 2 + 150
+
+# Фон просмотра управления
+
+management_bg = pygame.image.load('management_bg.png')
 
 # песни альбома "Камнем по голове"
 
@@ -416,6 +425,7 @@ while True:
         pygame.mixer.music.play(-1)
         window.blit(start_btn, start_rect)
         window.blit(exit_btn, exit_rect)
+        window.blit(management_btn, management_btn_rect)
 
         # Позиция указателя мыши
         pos = pygame.mouse.get_pos()
@@ -425,7 +435,9 @@ while True:
             choice_menu = True
         elif exit_rect.collidepoint(pos) and pygame.mouse.get_pressed()[0] == True:
             exit()
-
+        elif management_btn_rect.collidepoint(pos) and pygame.mouse.get_pressed()[0] == True:
+            window.blit(management_bg, [0, 0])
+        
     elif main_menu == False:
         window.blit(choice2, [0, 0])
         window.blit(alb1_img, alb1_rect)
