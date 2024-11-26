@@ -55,47 +55,47 @@ platform_img = pygame.image.load('grass.png')
 dirt_img = pygame.image.load('dirt.png')
 stone_img = pygame.image.load('stone.png')
 
-alb1_img = pygame.image.load('alb1.png')
+alb1_img = pygame.image.load('альбомы/alb1.png')
 alb1_rect = alb1_img.get_rect()
 alb1_rect.x = 300
 alb1_rect.y = 150
 
-alb2_img = pygame.image.load('alb2.png')
+alb2_img = pygame.image.load('альбомы/alb2.png')
 alb2_rect = alb2_img.get_rect()
 alb2_rect.x = WIDTH-400
 alb2_rect.y = 150
 
-alb3_img = pygame.image.load('alb3.png')
+alb3_img = pygame.image.load('альбомы/alb3.png')
 alb3_rect = alb3_img.get_rect()
 alb3_rect.x = 550
 alb3_rect.y = 150
 
-alb4_img = pygame.image.load('alb4.png')
+alb4_img = pygame.image.load('альбомы/alb4.png')
 alb4_rect = alb4_img.get_rect()
 alb4_rect.x = 300
 alb4_rect.y = 270
 
-alb5_img = pygame.image.load('alb5.png')
+alb5_img = pygame.image.load('альбомы/alb5.png')
 alb5_rect = alb5_img.get_rect()
 alb5_rect.x = 550
 alb5_rect.y = 270
 
-alb6_img = pygame.image.load('alb6.png')
+alb6_img = pygame.image.load('альбомы/alb6.png')
 alb6_rect = alb6_img.get_rect()
 alb6_rect.x = WIDTH-400
 alb6_rect.y = 270
 
-alb7_img = pygame.image.load('alb7.png')
+alb7_img = pygame.image.load('альбомы/alb7.png')
 alb7_rect = alb7_img.get_rect()
 alb7_rect.x = 300
 alb7_rect.y = 390
 
-alb8_img = pygame.image.load('alb8.png')
+alb8_img = pygame.image.load('альбомы/alb8.png')
 alb8_rect = alb8_img.get_rect()
 alb8_rect.x = 550
 alb8_rect.y = 390
 
-alb9_img = pygame.image.load('alb9.png')
+alb9_img = pygame.image.load('альбомы/alb9.png')
 alb9_rect = alb9_img.get_rect()
 alb9_rect.x = WIDTH-400
 alb9_rect.y = 390
@@ -105,36 +105,46 @@ on_platform = False
 on_dirt = False
 on_zish = False
 # экран загрузки
-menu = pygame.image.load('menu.jpg')
+menu = pygame.image.load('backgrounds/менюшки/menu.jpg')
 menu = pygame.transform.scale(menu, [1200, 700])
 
-choice = pygame.image.load('choice.png')
-choice2 = pygame.image.load('choice2.png')
+choice = pygame.image.load('backgrounds/менюшки/choice.png')
+choice2 = pygame.image.load('backgrounds/менюшки/choice2.png')
 
-comming_soon_img = pygame.image.load('comming soon.png')
+comming_soon_img = pygame.image.load('backgrounds/менюшки/comming soon.png')
 
 
 testy = 2
 test = 2
 
 # фон
-background = pygame.image.load('background.png') # стардантный фон леса
+background = pygame.image.load('backgrounds/bg/background.png') # стардантный фон леса
 background = pygame.transform.scale(background, [WIDTH, HEIGHT])
 
-background1 = pygame.image.load('dark_forest.png') # фон внезапной головы(в начале)
+background1 = pygame.image.load('backgrounds/bg/dark_forest.png') # фон внезапной головы(в начале)
 background1 = pygame.transform.scale(background1, [WIDTH, HEIGHT])
 
-background2 = pygame.image.load('pupet_wizard_background.png') # фон куклы кодуна
+background5 = pygame.image.load('backgrounds/bg/dark_forest.jpeg') # фон лесника и охотника
+background5 = pygame.transform.scale(background5, [WIDTH, HEIGHT])
+
+background2 = pygame.image.load('backgrounds/bg/pupet_wizard_background.png') # фон куклы кодуна
 background2 = pygame.transform.scale(background2, [WIDTH, HEIGHT])
 
-background3 = pygame.image.load('room_zish.png') # комната злодея(конец злодея и шапки)
+background3 = pygame.image.load('backgrounds/bg/room_zish.png') # комната злодея(конец злодея и шапки)
 background3 = pygame.transform.scale(background3, [WIDTH, HEIGHT])
 
-background4 = pygame.image.load('market.png') # базар (злодей и шапка)
+background4 = pygame.image.load('backgrounds/bg/market.png') # базар (злодей и шапка)
 background4 = pygame.transform.scale(background4, [WIDTH, HEIGHT])
 
-background5 = pygame.image.load('dark_forest.jpeg') # фон лесника и охотника
-background5 = pygame.transform.scale(background5, [WIDTH, HEIGHT])
+# фоны для Утреннего рассвета
+
+sky_clouds = pygame.image.load('backgrounds/Утренний рассвет/в небе голубом облака плывут как корабли.jpeg')
+in_the_ravine_under_the_mountain = pygame.image.load('backgrounds/Утренний рассвет/в овраге под горою шелестела листва.jpeg')
+dont_wake_up_the_roosters_in_the_villages = pygame.image.load('backgrounds/Утренний рассвет/еще не пробудились петухи в деревнях.jpeg')
+cows_trampled_the_grass_in_the_fields = pygame.image.load('backgrounds/Утренний рассвет/коровами истоптана трава на полях.jpeg')
+there_are_no_fishermen_on_the_lake = pygame.image.load('backgrounds/Утренний рассвет/рыбаков на озере пока не видать.jpeg')
+the_sun_was_rising_above_the_earth = pygame.image.load('backgrounds/Утренний рассвет/солнце поднималось на землей.jpeg')
+warm_breeze_over_the_earth = pygame.image.load('backgrounds/Утренний рассвет/теплый ветерок мчится над поверхностью земли.jpeg')
 
 # фон на данный момент
 fon_now = background
