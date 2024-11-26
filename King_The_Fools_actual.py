@@ -50,6 +50,8 @@ main_menu = True
 # находимся ли мы в выборе уровня
 choice_menu = False
 
+choice_menu2 = False
+
 # СОЗДАЁМ ТЕКСТУРЫ
 platform_img = pygame.image.load('компоненты локации/grass.png')
 dirt_img = pygame.image.load('компоненты локации/dirt.png')
@@ -62,12 +64,12 @@ alb1_rect.y = 150
 
 alb2_img = pygame.image.load('обложки альбомов/alb2.png')
 alb2_rect = alb2_img.get_rect()
-alb2_rect.x = WIDTH-400
+alb2_rect.x = 550
 alb2_rect.y = 150
 
 alb3_img = pygame.image.load('обложки альбомов/alb3.png')
 alb3_rect = alb3_img.get_rect()
-alb3_rect.x = 550
+alb3_rect.x = WIDTH-400
 alb3_rect.y = 150
 
 alb4_img = pygame.image.load('обложки альбомов/alb4.png')
@@ -265,133 +267,6 @@ map = [
     '                            ',
 ]
 
-map2 = [
-    '                            ',
-    '                            ',  
-    '                            ',
-    '                            ',
-    '                            ',
-    '          -                 ',
-    '          -                 ',
-    '          -                 ',
-    '****************************',
-    '----------------------------',
-    '----------------------------',
-    '----------------------------',
-    '                            ',
-]
-
-map3 = [
-    '                            ',
-    '                            ',  
-    '                            ',
-    '                            ',
-    '                            ',
-    '                            ',
-    '          -                 ',
-    '          -                 ',
-    '****************************',
-    '----------------------------',
-    '----------------------------',
-    '----------------------------',
-    '                            ',
-]
-
-map4 = [
-    '                            ',
-    '                            ',  
-    '                            ',
-    '                            ',
-    '                            ',
-    '                            ',
-    '                            ',
-    '          -                 ',
-    '****************************',
-    '----------------------------',
-    '----------------------------',
-    '----------------------------',
-    '                            ',
-]
-
-map5 = [
-    '                            ',
-    '                            ',  
-    '                            ',
-    '                            ',
-    '                            ',
-    '          -                 ',
-    '          -                 ',
-    '          -                 ',
-    '****************************',
-    '----------------------------',
-    '----------------------------',
-    '----------------------------',
-    '                            ',
-]
-
-map6 = [
-    '                            ',
-    '                            ',  
-    '                            ',
-    '                            ',
-    '                            ',
-    '                            ',
-    '          -                 ',
-    '          -                 ',
-    '****************************',
-    '----------------------------',
-    '----------------------------',
-    '----------------------------',
-    '                            ',
-]
-
-map7 = [
-    '                            ',
-    '                            ',  
-    '                            ',
-    '                            ',
-    '                            ',
-    '                            ',
-    '                            ',
-    '          -                 ',
-    '****************************',
-    '----------------------------',
-    '----------------------------',
-    '----------------------------',
-    '                            ',
-]
-
-map8 = [
-    '                            ',
-    '                            ',  
-    '                            ',
-    '                            ',
-    '                            ',
-    '          -                 ',
-    '          -                 ',
-    '          -                 ',
-    '****************************',
-    '----------------------------',
-    '----------------------------',
-    '----------------------------',
-    '                            ',
-]
-
-map9 = [
-    '                            ',
-    '                            ',  
-    '                            ',
-    '                            ',
-    '                            ',
-    '                            ',
-    '          -                 ',
-    '          -                 ',
-    '****************************',
-    '----------------------------',
-    '----------------------------',
-    '----------------------------',
-    '                            ',
-]
 
 platforms = []
 dirts = []
@@ -402,12 +277,10 @@ vgs = []
 map_now = map
 run = False
 frame = 0
+
 show = True
 
 while True:
-    if show == True:
-        window.blit(background, [0,0])
-    
     man_old = man_rect.copy()    
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -426,6 +299,8 @@ while True:
             # кнопка ESCAPE
             if event.key == pygame.K_ESCAPE:
                 main_menu = True
+                choice_menu = False
+                choice_menu2 = False
                 man_rect.x = randint(0, WIDTH)
                 man_rect.y = 776
 
@@ -443,6 +318,7 @@ while True:
         if start_rect.collidepoint(pos) and pygame.mouse.get_pressed()[0] == True:
             main_menu = False
             choice_menu = True
+            print("choice_menu", choice_menu)
         elif exit_rect.collidepoint(pos) and pygame.mouse.get_pressed()[0] == True:
             exit()
         elif management_btn_rect.collidepoint(pos) and pygame.mouse.get_pressed()[0] == True:
@@ -460,212 +336,20 @@ while True:
         window.blit(alb8_img, alb8_rect)
         window.blit(alb9_img, alb9_rect)
         pos = pygame.mouse.get_pos()
+
         # альбом камнем по голове
         if alb1_rect.collidepoint(pos) and pygame.mouse.get_pressed()[0] == True:
+            choice_menu = False
+            choice_menu2 = True
+            print("choice_menu 0.2", choice_menu)
+            print("choice_menu2", choice_menu2)
+        if choice_menu2 == True:
             window.blit(choice, [0, 0])
             window.blit(sudden_head_img, sudden_head_rect)
             window.blit(villain_and_hat, villain_and_hat_rect)
             window.blit(fool_and_lightning, fool_and_lightning_rect) # во второй бетке)))
-            """window.blit(background1, [0, 0])
-            
-            for i in range(len(map_now)):
-                for j in range(len(map_now[i])):
-                    
-                    map_now = map
-                    
-                    if map_now[i][j] == '*':
-                        platform_rect = platform_img.get_rect()
-                        platform_rect.x = platform_rect.width * j + test
-                        platform_rect.y = platform_rect.height * i + testy
-                        platforms.append(platform_rect)
-                        window.blit(platform_img, platform_rect)
-                    if map_now[i][j] == '-': 
-                        dirt_rect = dirt_img.get_rect()
-                        dirt_rect.x = dirt_rect.width * j + test
-                        dirt_rect.y = dirt_rect.height * i + testy
-                        dirts.append(dirt_rect)
-                        window.blit(dirt_img, dirt_rect)    
-            man_rect.x += change_x"""
-        # акустический альбом    
-        elif alb2_rect.collidepoint(pos) and pygame.mouse.get_pressed()[0] == True:
-            window.blit(choice, [0, 0])
-            window.blit(puppet_of_wizard, puppet_of_wizard_rect)
-            window.blit(morning_dawn, morning_dawn_rect)
-            '''window.blit(background2, [0, 0])
-            for i in range(len(map_now)):
-                for j in range(len(map_now[i])):
-                    map_now = map2
-                    
-                    if map_now[i][j] == '*':
-                        platform_rect = platform_img.get_rect()
-                        platform_rect.x = platform_rect.width * j + test
-                        platform_rect.y = platform_rect.height * i + testy
-                        platforms.append(platform_rect)
-                        window.blit(platform_img, platform_rect)
-                    if map_now[i][j] == '-': 
-                        dirt_rect = dirt_img.get_rect()
-                        dirt_rect.x = dirt_rect.width * j + test
-                        dirt_rect.y = dirt_rect.height * i + testy
-                        dirts.append(dirt_rect)
-                        window.blit(dirt_img, dirt_rect)    
-            man_rect.x += change_x'''
-        # альбом будь как дома путник
-        elif alb3_rect.collidepoint(pos) and pygame.mouse.get_pressed()[0] == True:
-            window.blit(choice, [0, 0])
-            window.blit(forester_img, forester_img_rect)
-            window.blit(hunter_img, hunter_img_rect)
-            window.blit(meeting_img, meeting_img_rect)
-            '''window.blit(background5, [0, 0])
-            for i in range(len(map_now)):
-                for j in range(len(map_now[i])):
-                    map_now = map3
-                    
-                    if map_now[i][j] == '*':
-                        platform_rect = platform_img.get_rect()
-                        platform_rect.x = platform_rect.width * j + test
-                        platform_rect.y = platform_rect.height * i + testy
-                        platforms.append(platform_rect)
-                        window.blit(platform_img, platform_rect)
-                    if map_now[i][j] == '-': 
-                        dirt_rect = dirt_img.get_rect()
-                        dirt_rect.x = dirt_rect.width * j + test
-                        dirt_rect.y = dirt_rect.height * i + testy
-                        dirts.append(dirt_rect)
-                        window.blit(dirt_img, dirt_rect)    
-            man_rect.x += change_x   '''     
-        # как в старой сказке
-        elif alb4_rect.collidepoint(pos) and pygame.mouse.get_pressed()[0] == True:
-            window.blit(choice, [0, 0])
-            window.blit(two_monks, two_monks_rect)
-            window.blit(damn_old_house, damn_old_house_rect)
-            window.blit(antique_clock, antique_clock_rect)
-            '''window.blit(background, [0, 0])
-            for i in range(len(map_now)):
-                for j in range(len(map_now[i])):
-                    map_now = map4
-                    
-                    if map_now[i][j] == '*':
-                        platform_rect = platform_img.get_rect()
-                        platform_rect.x = platform_rect.width * j + test
-                        platform_rect.y = platform_rect.height * i + testy
-                        platforms.append(platform_rect)
-                        window.blit(platform_img, platform_rect)
-                    if map_now[i][j] == '-': 
-                        dirt_rect = dirt_img.get_rect()
-                        dirt_rect.x = dirt_rect.width * j + test
-                        dirt_rect.y = dirt_rect.height * i + testy
-                        dirts.append(dirt_rect)
-                        window.blit(dirt_img, dirt_rect)    
-            man_rect.x += change_x   '''   
-        # альбом жаль нет ружья  
-        elif alb5_rect.collidepoint(pos) and pygame.mouse.get_pressed()[0] == True:
-            window.blit(comming_soon_img, [0, 0])
-            '''window.blit(background, [0, 0])
-            for i in range(len(map_now)):
-                for j in range(len(map_now[i])):
-                    map_now = map5
-                    
-                    if map_now[i][j] == '*':
-                        platform_rect = platform_img.get_rect()
-                        platform_rect.x = platform_rect.width * j + test
-                        platform_rect.y = platform_rect.height * i + testy
-                        platforms.append(platform_rect)
-                        window.blit(platform_img, platform_rect)
-                    if map_now[i][j] == '-': 
-                        dirt_rect = dirt_img.get_rect()
-                        dirt_rect.x = dirt_rect.width * j + test
-                        dirt_rect.y = dirt_rect.height * i + testy
-                        dirts.append(dirt_rect)
-                        window.blit(dirt_img, dirt_rect)    
-            man_rect.x += change_x     '''   
-        # альбом бунт на корабле
-        elif alb6_rect.collidepoint(pos) and pygame.mouse.get_pressed()[0] == True:
-            window.blit(comming_soon_img, [0, 0])
-            '''window.blit(background, [0, 0])
-            for i in range(len(map_now)):
-                for j in range(len(map_now[i])):
-                    map_now = map6
-                    
-                    if map_now[i][j] == '*':
-                        platform_rect = platform_img.get_rect()
-                        platform_rect.x = platform_rect.width * j + test
-                        platform_rect.y = platform_rect.height * i + testy
-                        platforms.append(platform_rect)
-                        window.blit(platform_img, platform_rect)
-                    if map_now[i][j] == '-': 
-                        dirt_rect = dirt_img.get_rect()
-                        dirt_rect.x = dirt_rect.width * j + test
-                        dirt_rect.y = dirt_rect.height * i + testy
-                        dirts.append(dirt_rect)
-                        window.blit(dirt_img, dirt_rect)    
-            man_rect.x += change_x    '''
-        # альбом продавец кошмаров
-        elif alb7_rect.collidepoint(pos) and pygame.mouse.get_pressed()[0] == True:
-            window.blit(comming_soon_img, [0, 0])
-            '''window.blit(background, [0, 0])
-            for i in range(len(map_now)):
-                for j in range(len(map_now[i])):
-                    map_now = map7
-                    
-                    if map_now[i][j] == '*':
-                        platform_rect = platform_img.get_rect()
-                        platform_rect.x = platform_rect.width * j + test
-                        platform_rect.y = platform_rect.height * i + testy
-                        platforms.append(platform_rect)
-                        window.blit(platform_img, platform_rect)
-                    if map_now[i][j] == '-': 
-                        dirt_rect = dirt_img.get_rect()
-                        dirt_rect.x = dirt_rect.width * j + test
-                        dirt_rect.y = dirt_rect.height * i + testy
-                        dirts.append(dirt_rect)
-                        window.blit(dirt_img, dirt_rect)    
-            man_rect.x += change_x    '''
-        # альбом тень клоуна
-        elif alb8_rect.collidepoint(pos) and pygame.mouse.get_pressed()[0] == True:
-            window.blit(comming_soon_img, [0, 0])
-            '''window.blit(background, [0, 0])
-            for i in range(len(map_now)):
-                for j in range(len(map_now[i])):
-                    map_now = map8
-                    
-                    if map_now[i][j] == '*':
-                        platform_rect = platform_img.get_rect()
-                        platform_rect.x = platform_rect.width * j + test
-                        platform_rect.y = platform_rect.height * i + testy
-                        platforms.append(platform_rect)
-                        window.blit(platform_img, platform_rect)
-                    if map_now[i][j] == '-': 
-                        dirt_rect = dirt_img.get_rect()
-                        dirt_rect.x = dirt_rect.width * j + test
-                        dirt_rect.y = dirt_rect.height * i + testy
-                        dirts.append(dirt_rect)
-                        window.blit(dirt_img, dirt_rect)    
-            man_rect.x += change_x '''       
-        # альбом театръ демона
-        elif alb9_rect.collidepoint(pos) and pygame.mouse.get_pressed()[0] == True:
-            window.blit(comming_soon_img, [0, 0])
-            '''window.blit(background, [0, 0])
-            for i in range(len(map_now)):
-                for j in range(len(map_now[i])):
-                    map_now = map9
-                    
-                    if map_now[i][j] == '*':
-                        platform_rect = platform_img.get_rect()
-                        platform_rect.x = platform_rect.width * j + test
-                        platform_rect.y = platform_rect.height * i + testy
-                        platforms.append(platform_rect)
-                        window.blit(platform_img, platform_rect)
-                    if map_now[i][j] == '-': 
-                        dirt_rect = dirt_img.get_rect()
-                        dirt_rect.x = dirt_rect.width * j + test
-                        dirt_rect.y = dirt_rect.height * i + testy
-                        dirts.append(dirt_rect)
-                        window.blit(dirt_img, dirt_rect)    
-            man_rect.x += change_x    '''
-
 
     else:
-      
         for i in range(len(map_now)):
             for j in range(len(map_now[i])):
                 # создаём траву
@@ -689,6 +373,7 @@ while True:
                     stone_rect.y = stone_rect.height * i + testy
                     stones.append(stone_rect)
                     window.blit(stone_img, stone_rect)
+        
                 
         man_rect.x += change_x
         keys = pygame.key.get_pressed()
@@ -702,10 +387,6 @@ while True:
                 
                 if man_rect.x > 1090:
                     man_rect.x = 1090
-       
-        # if keys[pygame.K_LEFT]:
-        #     change_x = -speed
-        #     man = man_left
             
         if keys[pygame.K_a]:
             change_x = -speed
