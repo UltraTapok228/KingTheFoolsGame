@@ -1,4 +1,4 @@
-       """window.blit(background1, [0, 0])
+        window.blit(background1, [0, 0])
             
             for i in range(len(map_now)):
                 for j in range(len(map_now[i])):
@@ -17,4 +17,4 @@
                         dirt_rect.y = dirt_rect.height * i + testy
                         dirts.append(dirt_rect)
                         window.blit(dirt_img, dirt_rect)    
-            man_rect.x += change_x"""
+            man_rect.x += change_x

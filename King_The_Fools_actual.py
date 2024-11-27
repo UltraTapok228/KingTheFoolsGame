@@ -107,7 +107,7 @@ on_platform = False
 on_dirt = False
 on_zish = False
 # экран загрузки
-menu = pygame.image.load('backgrounds/менюшки/menu.jpg')
+menu = pygame.image.load('backgrounds/менюшки/menu.png')
 menu = pygame.transform.scale(menu, [1200, 700])
 
 choice = pygame.image.load('backgrounds/менюшки/choice.png')
@@ -156,14 +156,7 @@ start_btn = pygame.image.load('кнопки/play_btn.png')
 start_btn = pygame.transform.scale(start_btn, [278, 80])
 start_rect = start_btn.get_rect()
 start_rect.x = WIDTH // 2 - (278//2)
-start_rect.y = HEIGHT // 2 + 50
-
-# Кнопка выхода из игры
-exit_btn = pygame.image.load('кнопки/exit_btn.png')
-exit_btn = pygame.transform.scale(exit_btn, [278, 80])
-exit_rect = exit_btn.get_rect()
-exit_rect.x = WIDTH // 2 - (278//2)
-exit_rect.y = HEIGHT // 2 + 250
+start_rect.y = HEIGHT // 2 + 65
 
 # Кнопка просмотра управления
 
@@ -171,7 +164,14 @@ management_btn = pygame.image.load('кнопки/management_btn.png')
 management_btn = pygame.transform.scale(management_btn, [278, 80])
 management_btn_rect = management_btn.get_rect()
 management_btn_rect.x = WIDTH // 2 - (278//2)
-management_btn_rect.y = HEIGHT // 2 + 150
+management_btn_rect.y = HEIGHT // 2 + 160
+
+# Кнопка выхода из игры
+exit_btn = pygame.image.load('кнопки/exit_btn.png')
+exit_btn = pygame.transform.scale(exit_btn, [278, 80])
+exit_rect = exit_btn.get_rect()
+exit_rect.x = WIDTH // 2 - (278//2)
+exit_rect.y = HEIGHT // 2 + 255
 
 # Фон просмотра управления
 
