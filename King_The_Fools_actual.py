@@ -149,7 +149,7 @@ the_sun_was_rising_above_the_earth = pygame.image.load('backgrounds/Утренн
 warm_breeze_over_the_earth = pygame.image.load('backgrounds/Утренний рассвет/теплый ветерок мчится над поверхностью земли.jpeg')
 
 # фон на данный момент
-fon_now = background
+bg_now = background
 
 # Кнопка начала игры
 start_btn = pygame.image.load('кнопки/play_btn.png')
@@ -348,33 +348,28 @@ while True:
             window.blit(sudden_head_img, sudden_head_rect)
             window.blit(villain_and_hat, villain_and_hat_rect)
             window.blit(fool_and_lightning, fool_and_lightning_rect) # во второй бетке)))
+            if sudden_head_rect.collidepoint(pos) and pygame.mouse.get_pressed()[0] == True:
+                map_now = map
+                bg_now = background
+                window.blit(bg_now, [0, 0])
+                for i in range(len(map_now)):
+                    for j in range(len(map_now[i])):
+                        # создаём траву
+                        if map_now[i][j] == '*':
+                            platform_rect = platform_img.get_rect()
+                            platform_rect.x = platform_rect.width * j + test
+                            platform_rect.y = platform_rect.height * i + testy
+                            platforms.append(platform_rect)
+                            window.blit(platform_img, platform_rect)
+                        #  создаем землю    
+                        elif map_now[i][j] == '-': 
+                            dirt_rect = dirt_img.get_rect()
+                            dirt_rect.x = dirt_rect.width * j + test
+                            dirt_rect.y = dirt_rect.height * i + testy
+                            dirts.append(dirt_rect)
+                            window.blit(dirt_img, dirt_rect)
 
-    else:
-        for i in range(len(map_now)):
-            for j in range(len(map_now[i])):
-                # создаём траву
-                if map_now[i][j] == '*':
-                    platform_rect = platform_img.get_rect()
-                    platform_rect.x = platform_rect.width * j + test
-                    platform_rect.y = platform_rect.height * i + testy
-                    platforms.append(platform_rect)
-                    window.blit(platform_img, platform_rect)
-                #  создаем землю    
-                elif map_now[i][j] == '-': 
-                    dirt_rect = dirt_img.get_rect()
-                    dirt_rect.x = dirt_rect.width * j + test
-                    dirt_rect.y = dirt_rect.height * i + testy
-                    dirts.append(dirt_rect)
-                    window.blit(dirt_img, dirt_rect)
-                # создаем камень
-                elif map_now[i][j] == 's':
-                    stone_rect = stone_img.get_rect()
-                    stone_rect.x = stone_rect.width * j + test
-                    stone_rect.y = stone_rect.height * i + testy
-                    stones.append(stone_rect)
-                    window.blit(stone_img, stone_rect)
-        
-                
+    else:       
         man_rect.x += change_x
         keys = pygame.key.get_pressed()
 
