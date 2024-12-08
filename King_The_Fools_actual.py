@@ -115,9 +115,58 @@ choice2 = pygame.image.load('backgrounds/менюшки/choice2.png')
 
 comming_soon_img = pygame.image.load('backgrounds/менюшки/comming soon.png')
 
-
 testy = 2
 test = 2
+
+def move():
+
+    global change_x, man
+
+    man_rect.x += change_x
+    keys = pygame.key.get_pressed()
+
+    def right():
+        #if keys[pygame.K_d]:
+        change_x = speed
+        man = man_stand
+        if man_rect.x >= 1090:
+            test -= 10
+            
+            if man_rect.x > 1090:
+                man_rect.x = 1090
+    def left():        
+        #if keys[pygame.K_a]:
+        change_x = -speed
+        man = man_left
+        if man_rect.x <= 0:
+            test += 10
+            
+            if man_rect.x < 0:
+                man_rect.x = 0
+            
+    if not keys[pygame.K_d] and not keys[pygame.K_a]:
+        
+        change_x = 0
+            
+#print(pygame.mouse.get_pos())
+
+if jump == True:
+    man_rect.y -= jump_count
+    if man_rect.y >= jump_max:
+        jump = False
+    if man_rect.y >= 900:
+        testy -= 20     
+
+#if jump_count > -jump_max or (man_rect.bottom < HEIGHT and on_platform == False):
+    #jump_count -= 1
+    
+else:
+    jump = False
+    on_platform = True
+        
+    man_rect.x += change_x
+
+
 
 # фон
 background = pygame.image.load('backgrounds/bg/background.png') # стардантный фон леса
@@ -336,66 +385,87 @@ while True:
         window.blit(alb8_img, alb8_rect)
         window.blit(alb9_img, alb9_rect)
         pos = pygame.mouse.get_pos()
-
+        print("choice_menu2.1", choice_menu2)
         # альбом камнем по голове
-        if alb1_rect.collidepoint(pos) and pygame.mouse.get_pressed()[0] == True:
+        if alb1_rect.collidepoint(pos) and pygame.mouse.get_pressed()[0] == True and choice_menu2 == False:
             choice_menu = False
             choice_menu2 = True
             print("choice_menu 0.2", choice_menu)
-            print("choice_menu2", choice_menu2)
+            print("choice_menu2.2", choice_menu2)
         if choice_menu2 == True:
             window.blit(choice, [0, 0])
             window.blit(sudden_head_img, sudden_head_rect)
             window.blit(villain_and_hat, villain_and_hat_rect)
             window.blit(fool_and_lightning, fool_and_lightning_rect) # во второй бетке)))
-            if sudden_head_rect.collidepoint(pos) and pygame.mouse.get_pressed()[0] == True:
-                map_now = map
-                bg_now = background
-                window.blit(bg_now, [0, 0])
-                for i in range(len(map_now)):
-                    for j in range(len(map_now[i])):
-                        # создаём траву
-                        if map_now[i][j] == '*':
-                            platform_rect = platform_img.get_rect()
-                            platform_rect.x = platform_rect.width * j + test
-                            platform_rect.y = platform_rect.height * i + testy
-                            platforms.append(platform_rect)
-                            window.blit(platform_img, platform_rect)
-                        #  создаем землю    
-                        elif map_now[i][j] == '-': 
-                            dirt_rect = dirt_img.get_rect()
-                            dirt_rect.x = dirt_rect.width * j + test
-                            dirt_rect.y = dirt_rect.height * i + testy
-                            dirts.append(dirt_rect)
-                            window.blit(dirt_img, dirt_rect)
+        # Дурак и Молния
+        if fool_and_lightning_rect.collidepoint(pos) and pygame.mouse.get_pressed()[0] == True:
+            print("дурак и молния")
+            map_now = map
+            bg_now = background
+            window.blit(bg_now, [0, 0])
+            for i in range(len(map_now)):
+                for j in range(len(map_now[i])):
+                    # создаём траву
+                    if map_now[i][j] == '*':
+                        platform_rect = platform_img.get_rect()
+                        platform_rect.x = platform_rect.width * j + test
+                        platform_rect.y = platform_rect.height * i + testy
+                        platforms.append(platform_rect)
+                        window.blit(platform_img, platform_rect)
+                    #  создаем землю    
+                    elif map_now[i][j] == '-': 
+                        dirt_rect = dirt_img.get_rect()
+                        dirt_rect.x = dirt_rect.width * j + test
+                        dirt_rect.y = dirt_rect.height * i + testy
+                        dirts.append(dirt_rect)
+                        window.blit(dirt_img, dirt_rect)
+
+        # Злодей и Шапка
+        if villain_and_hat_rect.collidepoint(pos) and pygame.mouse.get_pressed()[0] == True:
+            map_now = map
+            bg_now = background
+            window.blit(bg_now, [0, 0])
+            for i in range(len(map_now)):
+                for j in range(len(map_now[i])):
+                    # создаём траву
+                    if map_now[i][j] == '*':
+                        platform_rect = platform_img.get_rect()
+                        platform_rect.x = platform_rect.width * j + test
+                        platform_rect.y = platform_rect.height * i + testy
+                        platforms.append(platform_rect)
+                        window.blit(platform_img, platform_rect)
+                    #  создаем землю    
+                    elif map_now[i][j] == '-': 
+                        dirt_rect = dirt_img.get_rect()
+                        dirt_rect.x = dirt_rect.width * j + test
+                        dirt_rect.y = dirt_rect.height * i + testy
+                        dirts.append(dirt_rect)
+                        window.blit(dirt_img, dirt_rect)
+
+        # Внезапная голова
+        if sudden_head_rect.collidepoint(pos) and pygame.mouse.get_pressed()[0] == True:
+            map_now = map
+            bg_now = background
+            window.blit(bg_now, [0, 0])
+            for i in range(len(map_now)):
+                for j in range(len(map_now[i])):
+                    # создаём траву
+                    if map_now[i][j] == '*':
+                        platform_rect = platform_img.get_rect()
+                        platform_rect.x = platform_rect.width * j + test
+                        platform_rect.y = platform_rect.height * i + testy
+                        platforms.append(platform_rect)
+                        window.blit(platform_img, platform_rect)
+                    #  создаем землю    
+                    elif map_now[i][j] == '-': 
+                        dirt_rect = dirt_img.get_rect()
+                        dirt_rect.x = dirt_rect.width * j + test
+                        dirt_rect.y = dirt_rect.height * i + testy
+                        dirts.append(dirt_rect)
+                        window.blit(dirt_img, dirt_rect)
 
     else:       
-        man_rect.x += change_x
-        keys = pygame.key.get_pressed()
 
-        if keys[pygame.K_d]:
-            
-            change_x = speed
-            man = man_stand
-            if man_rect.x >= 1090:
-                test -= 10
-                
-                if man_rect.x > 1090:
-                    man_rect.x = 1090
-            
-        if keys[pygame.K_a]:
-            change_x = -speed
-            man = man_left
-            if man_rect.x <= 0:
-                test += 10
-                
-                if man_rect.x < 0:
-                    man_rect.x = 0
-                
-        if not keys[pygame.K_d] and not keys[pygame.K_a]:
-            
-            change_x = 0
-                 
         #print(pygame.mouse.get_pos())
 
         if jump == True:
