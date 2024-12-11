@@ -327,8 +327,10 @@ map_now = map
 run = False
 frame = 0
 
-show = True
+choice_lvl = False
+choice_lvl2 = False
 
+count_click = 0
 while True:
     man_old = man_rect.copy()    
     for event in pygame.event.get():
@@ -387,39 +389,25 @@ while True:
         pos = pygame.mouse.get_pos()
         print("choice_menu2.1", choice_menu2)
         # альбом камнем по голове
-        if alb1_rect.collidepoint(pos) and pygame.mouse.get_pressed()[0] == True and choice_menu2 == False:
+        if alb1_rect.collidepoint(pos) and pygame.MOUSEBUTTONDOWN == True and choice_menu2 == False:
             choice_menu = False
             choice_menu2 = True
-            print("choice_menu 0.2", choice_menu)
-            print("choice_menu2.2", choice_menu2)
+            choice_lvl = True
+            #print("choice_menu 0.2", choice_menu)
+            #print("choice_menu2.2", choice_menu2)
         if choice_menu2 == True:
             window.blit(choice, [0, 0])
             window.blit(sudden_head_img, sudden_head_rect)
             window.blit(villain_and_hat, villain_and_hat_rect)
-            window.blit(fool_and_lightning, fool_and_lightning_rect) # во второй бетке)))
+            window.blit(fool_and_lightning, fool_and_lightning_rect) # во второй бетке))) 
+            count_click = 10   
         # Дурак и Молния
-        if fool_and_lightning_rect.collidepoint(pos) and pygame.mouse.get_pressed()[0] == True:
-            print("дурак и молния")
-            map_now = map
-            bg_now = background
-            window.blit(bg_now, [0, 0])
-            for i in range(len(map_now)):
-                for j in range(len(map_now[i])):
-                    # создаём траву
-                    if map_now[i][j] == '*':
-                        platform_rect = platform_img.get_rect()
-                        platform_rect.x = platform_rect.width * j + test
-                        platform_rect.y = platform_rect.height * i + testy
-                        platforms.append(platform_rect)
-                        window.blit(platform_img, platform_rect)
-                    #  создаем землю    
-                    elif map_now[i][j] == '-': 
-                        dirt_rect = dirt_img.get_rect()
-                        dirt_rect.x = dirt_rect.width * j + test
-                        dirt_rect.y = dirt_rect.height * i + testy
-                        dirts.append(dirt_rect)
-                        window.blit(dirt_img, dirt_rect)
-
+            if fool_and_lightning_rect.collidepoint(pos) and pygame.mouse.get_pressed()[0] == True and count_click == 10 and choice_lvl2 == False:
+                print("дурак и молния")
+                choice_lvl = False
+                choice_lvl2 = True
+        if choice_lvl2 == True: 
+            window.blit(comming_soon_img, [0,0])
         # Злодей и Шапка
         if villain_and_hat_rect.collidepoint(pos) and pygame.mouse.get_pressed()[0] == True:
             map_now = map
