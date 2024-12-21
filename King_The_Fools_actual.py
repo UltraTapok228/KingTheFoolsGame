@@ -43,7 +43,6 @@ jump_max = 50
 
 # Изменение прыжка
 jump_count = 0
-jump_count_npc = 0
 
 # Находимся ли в главном меню
 main_menu = True
@@ -54,8 +53,13 @@ choice_menu2 = False
 
 # СОЗДАЁМ ТЕКСТУРЫ
 platform_img = pygame.image.load('компоненты локации/grass.png')
+platform_img = pygame.transform.scale(platform_img, [70, 70])
+
+stone_briks_img = pygame.image.load('компоненты локации/stone_bricks.png')
+
 dirt_img = pygame.image.load('компоненты локации/dirt.png')
 stone_img = pygame.image.load('компоненты локации/stone.png')
+stone_img = pygame.transform.scale(stone_img, [70, 70])
 
 alb1_img = pygame.image.load('обложки альбомов/alb1.png')
 alb1_rect = alb1_img.get_rect()
