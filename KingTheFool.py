@@ -17,11 +17,11 @@ FPS = 120
 clock = pygame.time.Clock()
 
 # иконка игры
-icon_img = pygame.image.load('icon.png')
+icon_img = pygame.image.load('assets/images/icons/icon.png')
 pygame.display.set_icon(icon_img)
 
 # персонаж
-man_stand = pygame.image.load('персонажи/man.png')
+man_stand = pygame.image.load('assets/images/персонажи/man.png')
 man_left = pygame.transform.flip(man_stand, True, False)
 
 man_stand.set_colorkey([163,73,164])
@@ -52,56 +52,56 @@ choice_menu = False
 choice_menu2 = False
 
 # СОЗДАЁМ ТЕКСТУРЫ
-platform_img = pygame.image.load('компоненты локации/grass.png')
+platform_img = pygame.image.load('assets/images/компоненты локации/grass.png')
 platform_img = pygame.transform.scale(platform_img, [70, 70])
 
-stone_briks_img = pygame.image.load('компоненты локации/stone_bricks.png')
+stone_briks_img = pygame.image.load('assets/images/компоненты локации/stone_bricks.png')
 
-dirt_img = pygame.image.load('компоненты локации/dirt.png')
-stone_img = pygame.image.load('компоненты локации/stone.png')
+dirt_img = pygame.image.load('assets/images/компоненты локации/dirt.png')
+stone_img = pygame.image.load('assets/images/компоненты локации/stone.png')
 stone_img = pygame.transform.scale(stone_img, [70, 70])
 
-alb1_img = pygame.image.load('обложки альбомов/alb1.png')
+alb1_img = pygame.image.load('assets/images/обложки альбомов/alb1.png')
 alb1_rect = alb1_img.get_rect()
 alb1_rect.x = 300
 alb1_rect.y = 150
 
-alb2_img = pygame.image.load('обложки альбомов/alb2.png')
+alb2_img = pygame.image.load('assets/images/обложки альбомов/alb2.png')
 alb2_rect = alb2_img.get_rect()
 alb2_rect.x = 550
 alb2_rect.y = 150
 
-alb3_img = pygame.image.load('обложки альбомов/alb3.png')
+alb3_img = pygame.image.load('assets/images/обложки альбомов/alb3.png')
 alb3_rect = alb3_img.get_rect()
 alb3_rect.x = WIDTH-400
 alb3_rect.y = 150
 
-alb4_img = pygame.image.load('обложки альбомов/alb4.png')
+alb4_img = pygame.image.load('assets/images/обложки альбомов/alb4.png')
 alb4_rect = alb4_img.get_rect()
 alb4_rect.x = 300
 alb4_rect.y = 270
 
-alb5_img = pygame.image.load('обложки альбомов/alb5.png')
+alb5_img = pygame.image.load('assets/images/обложки альбомов/alb5.png')
 alb5_rect = alb5_img.get_rect()
 alb5_rect.x = 550
 alb5_rect.y = 270
 
-alb6_img = pygame.image.load('обложки альбомов/alb6.png')
+alb6_img = pygame.image.load('assets/images/обложки альбомов/alb6.png')
 alb6_rect = alb6_img.get_rect()
 alb6_rect.x = WIDTH-400
 alb6_rect.y = 270
 
-alb7_img = pygame.image.load('обложки альбомов/alb7.png')
+alb7_img = pygame.image.load('assets/images/обложки альбомов/alb7.png')
 alb7_rect = alb7_img.get_rect()
 alb7_rect.x = 300
 alb7_rect.y = 390
 
-alb8_img = pygame.image.load('обложки альбомов/alb8.png')
+alb8_img = pygame.image.load('assets/images/обложки альбомов/alb8.png')
 alb8_rect = alb8_img.get_rect()
 alb8_rect.x = 550
 alb8_rect.y = 390
 
-alb9_img = pygame.image.load('обложки альбомов/alb9.png')
+alb9_img = pygame.image.load('assets/images/обложки альбомов/alb9.png')
 alb9_rect = alb9_img.get_rect()
 alb9_rect.x = WIDTH-400
 alb9_rect.y = 390
@@ -111,13 +111,13 @@ on_platform = False
 on_dirt = False
 on_zish = False
 # экран загрузки
-menu = pygame.image.load('backgrounds/менюшки/menu.png')
+menu = pygame.image.load('assets/images/backgrounds/менюшки/menu.png')
 menu = pygame.transform.scale(menu, [1200, 700])
 
-choice = pygame.image.load('backgrounds/менюшки/choice.png')
-choice2 = pygame.image.load('backgrounds/менюшки/choice2.png')
+choice = pygame.image.load('assets/images/backgrounds/менюшки/choice.png')
+choice2 = pygame.image.load('assets/images/backgrounds/менюшки/choice2.png')
 
-comming_soon_img = pygame.image.load('backgrounds/менюшки/comming soon.png')
+comming_soon_img = pygame.image.load('assets/images/backgrounds/менюшки/comming soon.png')
 
 testy = 2
 test = 2
@@ -173,39 +173,39 @@ else:
 
 
 # фон
-background = pygame.image.load('backgrounds/bg/background.png') # стардантный фон леса
+background = pygame.image.load('assets/images/backgrounds/bg/background.png') # стардантный фон леса
 background = pygame.transform.scale(background, [WIDTH, HEIGHT])
 
-background1 = pygame.image.load('backgrounds/bg/dark_forest.png') # фон внезапной головы(в начале)
+background1 = pygame.image.load('assets/images/backgrounds/bg/dark_forest.png') # фон внезапной головы(в начале)
 background1 = pygame.transform.scale(background1, [WIDTH, HEIGHT])
 
-background5 = pygame.image.load('backgrounds/bg/dark_forest.jpeg') # фон лесника и охотника
+background5 = pygame.image.load('assets/images/backgrounds/bg/dark_forest.jpeg') # фон лесника и охотника
 background5 = pygame.transform.scale(background5, [WIDTH, HEIGHT])
 
-background2 = pygame.image.load('backgrounds/bg/pupet_wizard_background.png') # фон куклы кодуна
+background2 = pygame.image.load('assets/images/backgrounds/bg/pupet_wizard_background.png') # фон куклы кодуна
 background2 = pygame.transform.scale(background2, [WIDTH, HEIGHT])
 
-background3 = pygame.image.load('backgrounds/bg/room_zish.png') # комната злодея(конец злодея и шапки)
+background3 = pygame.image.load('assets/images/backgrounds/bg/room_zish.png') # комната злодея(конец злодея и шапки)
 background3 = pygame.transform.scale(background3, [WIDTH, HEIGHT])
 
-background4 = pygame.image.load('backgrounds/bg/market.png') # базар (злодей и шапка)
+background4 = pygame.image.load('assets/images/backgrounds/bg/market.png') # базар (злодей и шапка)
 background4 = pygame.transform.scale(background4, [WIDTH, HEIGHT])
 
 # фоны для Утреннего рассвета
 
-sky_clouds = pygame.image.load('backgrounds/Утренний рассвет/в небе голубом облака плывут как корабли.jpeg')
-in_the_ravine_under_the_mountain = pygame.image.load('backgrounds/Утренний рассвет/в овраге под горою шелестела листва.jpeg')
-dont_wake_up_the_roosters_in_the_villages = pygame.image.load('backgrounds/Утренний рассвет/еще не пробудились петухи в деревнях.jpeg')
-cows_trampled_the_grass_in_the_fields = pygame.image.load('backgrounds/Утренний рассвет/коровами истоптана трава на полях.jpeg')
-there_are_no_fishermen_on_the_lake = pygame.image.load('backgrounds/Утренний рассвет/рыбаков на озере пока не видать.jpeg')
-the_sun_was_rising_above_the_earth = pygame.image.load('backgrounds/Утренний рассвет/солнце поднималось над землей.jpeg')
-warm_breeze_over_the_earth = pygame.image.load('backgrounds/Утренний рассвет/теплый ветерок мчится над поверхностью земли.jpeg')
+sky_clouds = pygame.image.load('assets/images/backgrounds/Утренний рассвет/в небе голубом облака плывут как корабли.jpeg')
+in_the_ravine_under_the_mountain = pygame.image.load('assets/images/backgrounds/Утренний рассвет/в овраге под горою шелестела листва.jpeg')
+dont_wake_up_the_roosters_in_the_villages = pygame.image.load('assets/images/backgrounds/Утренний рассвет/еще не пробудились петухи в деревнях.jpeg')
+cows_trampled_the_grass_in_the_fields = pygame.image.load('assets/images/backgrounds/Утренний рассвет/коровами истоптана трава на полях.jpeg')
+there_are_no_fishermen_on_the_lake = pygame.image.load('assets/images/backgrounds/Утренний рассвет/рыбаков на озере пока не видать.jpeg')
+the_sun_was_rising_above_the_earth = pygame.image.load('assets/images/backgrounds/Утренний рассвет/солнце поднималось над землей.jpeg')
+warm_breeze_over_the_earth = pygame.image.load('assets/images/backgrounds/Утренний рассвет/теплый ветерок мчится над поверхностью земли.jpeg')
 
 # фон на данный момент
 bg_now = background
 
 # Кнопка начала игры
-start_btn = pygame.image.load('кнопки/play_btn.png')
+start_btn = pygame.image.load('assets/images/кнопки/play_btn.png')
 start_btn = pygame.transform.scale(start_btn, [278, 80])
 start_rect = start_btn.get_rect()
 start_rect.x = WIDTH // 2 - (278//2)
@@ -213,14 +213,14 @@ start_rect.y = HEIGHT // 2 + 65
 
 # Кнопка просмотра управления
 
-management_btn = pygame.image.load('кнопки/management_btn.png')
+management_btn = pygame.image.load('assets/images/кнопки/management_btn.png')
 management_btn = pygame.transform.scale(management_btn, [278, 80])
 management_btn_rect = management_btn.get_rect()
 management_btn_rect.x = WIDTH // 2 - (278//2)
 management_btn_rect.y = HEIGHT // 2 + 160
 
 # Кнопка выхода из игры
-exit_btn = pygame.image.load('кнопки/exit_btn.png')
+exit_btn = pygame.image.load('assets/images/кнопки/exit_btn.png')
 exit_btn = pygame.transform.scale(exit_btn, [278, 80])
 exit_rect = exit_btn.get_rect()
 exit_rect.x = WIDTH // 2 - (278//2)
@@ -228,23 +228,23 @@ exit_rect.y = HEIGHT // 2 + 255
 
 # Фон просмотра управления
 
-management_bg = pygame.image.load('backgrounds/менюшки/management_bg.png')
+management_bg = pygame.image.load('assets/images/backgrounds/менюшки/management_bg.png')
 
 # песни альбома "Камнем по голове"
 
-fool_and_lightning = pygame.image.load('Камнем по голове/дурак и молния.png')
+fool_and_lightning = pygame.image.load('assets/images/Камнем по голове/дурак и молния.png')
 fool_and_lightning = pygame.transform.scale(fool_and_lightning, [100, 100])
 fool_and_lightning_rect = fool_and_lightning.get_rect()
 fool_and_lightning_rect.x = 300
 fool_and_lightning_rect.y = 150
 
-sudden_head_img = pygame.image.load('Камнем по голове/Внезапная голова.png')
+sudden_head_img = pygame.image.load('assets/images/Камнем по голове/Внезапная голова.png')
 sudden_head_img = pygame.transform.scale(sudden_head_img, [100, 100])
 sudden_head_rect = sudden_head_img.get_rect()
 sudden_head_rect.x = WIDTH-400
 sudden_head_rect.y = 150
 
-villain_and_hat = pygame.image.load('Камнем по голове/Злодей и Шапка.png')
+villain_and_hat = pygame.image.load('assets/images/Камнем по голове/Злодей и Шапка.png')
 villain_and_hat = pygame.transform.scale(villain_and_hat, [100, 100])
 villain_and_hat_rect = fool_and_lightning.get_rect()
 villain_and_hat_rect.x = 550
@@ -252,19 +252,19 @@ villain_and_hat_rect.y = 150
 
 # песни альбома "Будь как дома путник"
 
-forester_img = pygame.image.load("Будь как дома путник/Лесник.png")
+forester_img = pygame.image.load("assets/images/Будь как дома путник/Лесник.png")
 forester_img = pygame.transform.scale(forester_img, [100, 100])
 forester_img_rect = forester_img.get_rect()
 forester_img_rect.x = 300
 forester_img_rect.y = 150
 
-hunter_img = pygame.image.load("Будь как дома путник/Охотник.png")
+hunter_img = pygame.image.load("assets/images/Будь как дома путник/Охотник.png")
 hunter_img = pygame.transform.scale(hunter_img, [100, 100])
 hunter_img_rect = hunter_img.get_rect()
 hunter_img_rect.x = WIDTH-400
 hunter_img_rect.y = 150
 
-meeting_img = pygame.image.load("Будь как дома путник/Собрание.png")
+meeting_img = pygame.image.load("assets/images/Будь как дома путник/Собрание.png")
 meeting_img = pygame.transform.scale(meeting_img, [100, 100])
 meeting_img_rect = meeting_img.get_rect()
 meeting_img_rect.x = 550
@@ -272,13 +272,13 @@ meeting_img_rect.y = 150
 
 # песни из Акустического альбома
 
-puppet_of_wizard = pygame.image.load('Акустический альбом/кукла колдуна.png')
+puppet_of_wizard = pygame.image.load('assets/images/Акустический альбом/кукла колдуна.png')
 puppet_of_wizard = pygame.transform.scale(puppet_of_wizard, [100, 100])
 puppet_of_wizard_rect = puppet_of_wizard.get_rect()
 puppet_of_wizard_rect.x = 300
 puppet_of_wizard_rect.y = 150
 
-morning_dawn = pygame.image.load('Акустический альбом/утренний рассвет.png')
+morning_dawn = pygame.image.load('assets/images/Акустический альбом/утренний рассвет.png')
 morning_dawn = pygame.transform.scale(morning_dawn, [100, 100])
 morning_dawn_rect = morning_dawn.get_rect()
 morning_dawn_rect.x = 550
@@ -286,19 +286,19 @@ morning_dawn_rect.y = 150
 
 # песни из альбома "Как в старой сказке" 
 
-two_monks = pygame.image.load('Как в старой сказке/Два монаха в одну ночь.png')
+two_monks = pygame.image.load('assets/images/Как в старой сказке/Два монаха в одну ночь.png')
 two_monks = pygame.transform.scale(two_monks, [100, 100])
 two_monks_rect = two_monks.get_rect()
 two_monks_rect.x = 300
 two_monks_rect.y = 150
 
-damn_old_house = pygame.image.load('Как в старой сказке/Проклятый старый дом.png')
+damn_old_house = pygame.image.load('assets/images/Как в старой сказке/Проклятый старый дом.png')
 damn_old_house = pygame.transform.scale(damn_old_house, [100, 100])
 damn_old_house_rect = damn_old_house.get_rect()
 damn_old_house_rect.x = WIDTH-400
 damn_old_house_rect.y = 150
 
-antique_clock = pygame.image.load('Как в старой сказке/Тайна хозяйки старинных часов.png')
+antique_clock = pygame.image.load('assets/images/Как в старой сказке/Тайна хозяйки старинных часов.png')
 antique_clock = pygame.transform.scale(antique_clock, [100, 100])
 antique_clock_rect = antique_clock.get_rect()
 antique_clock_rect.x = 550
@@ -361,7 +361,7 @@ while True:
 
     if main_menu == True:
         window.blit(menu, [0, 0])
-        music1 = pygame.mixer.music.load("саундтреки/король и шут.mp3")
+        music1 = pygame.mixer.music.load("assets/sounds/король и шут.mp3")
         pygame.mixer.music.play(-1)
         window.blit(start_btn, start_rect)
         window.blit(exit_btn, exit_rect)
