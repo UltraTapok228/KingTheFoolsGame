@@ -61,6 +61,8 @@ dirt_img = pygame.image.load('assets/images/компоненты локации/
 stone_img = pygame.image.load('assets/images/компоненты локации/stone.png')
 stone_img = pygame.transform.scale(stone_img, [70, 70])
 
+boards = pygame.image.load('assets/images/компаненты локации/boards.png') # символ в массиве "b"
+
 alb1_img = pygame.image.load('assets/images/обложки альбомов/alb1.png')
 alb1_rect = alb1_img.get_rect()
 alb1_rect.x = 300
@@ -76,35 +78,7 @@ alb3_rect = alb3_img.get_rect()
 alb3_rect.x = WIDTH-400
 alb3_rect.y = 150
 
-alb4_img = pygame.image.load('assets/images/обложки альбомов/alb4.png')
-alb4_rect = alb4_img.get_rect()
-alb4_rect.x = 300
-alb4_rect.y = 270
 
-alb5_img = pygame.image.load('assets/images/обложки альбомов/alb5.png')
-alb5_rect = alb5_img.get_rect()
-alb5_rect.x = 550
-alb5_rect.y = 270
-
-alb6_img = pygame.image.load('assets/images/обложки альбомов/alb6.png')
-alb6_rect = alb6_img.get_rect()
-alb6_rect.x = WIDTH-400
-alb6_rect.y = 270
-
-alb7_img = pygame.image.load('assets/images/обложки альбомов/alb7.png')
-alb7_rect = alb7_img.get_rect()
-alb7_rect.x = 300
-alb7_rect.y = 390
-
-alb8_img = pygame.image.load('assets/images/обложки альбомов/alb8.png')
-alb8_rect = alb8_img.get_rect()
-alb8_rect.x = 550
-alb8_rect.y = 390
-
-alb9_img = pygame.image.load('assets/images/обложки альбомов/alb9.png')
-alb9_rect = alb9_img.get_rect()
-alb9_rect.x = WIDTH-400
-alb9_rect.y = 390
 
 # Игрок находится на платформе
 on_platform = False
@@ -185,7 +159,7 @@ background5 = pygame.transform.scale(background5, [WIDTH, HEIGHT])
 background2 = pygame.image.load('assets/images/backgrounds/bg/pupet_wizard_background.png') # фон куклы кодуна
 background2 = pygame.transform.scale(background2, [WIDTH, HEIGHT])
 
-background3 = pygame.image.load('assets/images/backgrounds/bg/room_zish.png') # комната злодея(конец злодея и шапки)
+background3 = pygame.image.load('assets/images/backgrounds/bg/room_zish.png') # комната злодея(начало и конец злодея и шапки)
 background3 = pygame.transform.scale(background3, [WIDTH, HEIGHT])
 
 background4 = pygame.image.load('assets/images/backgrounds/bg/market.png') # базар (злодей и шапка)
@@ -284,42 +258,21 @@ morning_dawn_rect = morning_dawn.get_rect()
 morning_dawn_rect.x = 550
 morning_dawn_rect.y = 150
 
-# песни из альбома "Как в старой сказке" 
-
-two_monks = pygame.image.load('assets/images/Как в старой сказке/Два монаха в одну ночь.png')
-two_monks = pygame.transform.scale(two_monks, [100, 100])
-two_monks_rect = two_monks.get_rect()
-two_monks_rect.x = 300
-two_monks_rect.y = 150
-
-damn_old_house = pygame.image.load('assets/images/Как в старой сказке/Проклятый старый дом.png')
-damn_old_house = pygame.transform.scale(damn_old_house, [100, 100])
-damn_old_house_rect = damn_old_house.get_rect()
-damn_old_house_rect.x = WIDTH-400
-damn_old_house_rect.y = 150
-
-antique_clock = pygame.image.load('assets/images/Как в старой сказке/Тайна хозяйки старинных часов.png')
-antique_clock = pygame.transform.scale(antique_clock, [100, 100])
-antique_clock_rect = antique_clock.get_rect()
-antique_clock_rect.x = 550
-antique_clock_rect.y = 150
-
-map = [
-    '                            ',
-    '                            ',  
-    '                            ',
-    '                            ',
-    '                            ',
-    '                            ',
-    '                            ',
-    '          -                 ',
-    '****************************',
-    '----------------------------',
-    '----------------------------',
-    '----------------------------',
-    '                            ',
+villain_and_hat_map = [
+    '                                                         ',
+    '                                                         ',  
+    '                                                         ',
+    '                                                         ',
+    '                                                         ',
+    '                                                         ',
+    '                                                         ',
+    '                                                         ',
+    'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb',
+    'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb',
+    'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb',
+    '---------------------------------------------------------',
+    '---------------------------------------------------------',
 ]
-
 
 platforms = []
 dirts = []
@@ -327,7 +280,7 @@ zishs = []
 stones = []
 vgs = []
 
-map_now = map
+map_now = villain_and_hat_map
 run = False
 frame = 0
 
@@ -358,7 +311,7 @@ while True:
                 choice_menu2 = False
                 man_rect.x = randint(0, WIDTH)
                 man_rect.y = 776
-
+    
     if main_menu == True:
         window.blit(menu, [0, 0])
         music1 = pygame.mixer.music.load("assets/sounds/король и шут.mp3")
@@ -382,14 +335,6 @@ while True:
     elif main_menu == False:
         window.blit(choice2, [0, 0])
         window.blit(alb1_img, alb1_rect)
-        window.blit(alb2_img, alb2_rect)
-        window.blit(alb3_img, alb3_rect)
-        window.blit(alb4_img, alb4_rect)
-        window.blit(alb5_img, alb5_rect)
-        window.blit(alb6_img, alb6_rect)
-        window.blit(alb7_img, alb7_rect)
-        window.blit(alb8_img, alb8_rect)
-        window.blit(alb9_img, alb9_rect)
         pos = pygame.mouse.get_pos()
         print("choice_menu2.1", choice_menu2)
         # альбом камнем по голове
@@ -405,56 +350,21 @@ while True:
             window.blit(villain_and_hat, villain_and_hat_rect)
             window.blit(fool_and_lightning, fool_and_lightning_rect) # во второй бетке))) 
             count_click = 10   
-        # Дурак и Молния
-            if fool_and_lightning_rect.collidepoint(pos) and pygame.mouse.get_pressed()[0] == True and count_click == 10 and choice_lvl2 == False:
-                print("дурак и молния")
-                choice_lvl = False
-                choice_lvl2 = True
-        if choice_lvl2 == True: 
-            window.blit(comming_soon_img, [0,0])
         # Злодей и Шапка
         if villain_and_hat_rect.collidepoint(pos) and pygame.mouse.get_pressed()[0] == True:
-            map_now = map
-            bg_now = background
+            map_now = villain_and_hat_map
+            bg_now = background3
             window.blit(bg_now, [0, 0])
             for i in range(len(map_now)):
                 for j in range(len(map_now[i])):
-                    # создаём траву
+                    # рисуем доски
                     if map_now[i][j] == '*':
                         platform_rect = platform_img.get_rect()
                         platform_rect.x = platform_rect.width * j + test
                         platform_rect.y = platform_rect.height * i + testy
                         platforms.append(platform_rect)
                         window.blit(platform_img, platform_rect)
-                    #  создаем землю    
-                    elif map_now[i][j] == '-': 
-                        dirt_rect = dirt_img.get_rect()
-                        dirt_rect.x = dirt_rect.width * j + test
-                        dirt_rect.y = dirt_rect.height * i + testy
-                        dirts.append(dirt_rect)
-                        window.blit(dirt_img, dirt_rect)
-
-        # Внезапная голова
-        if sudden_head_rect.collidepoint(pos) and pygame.mouse.get_pressed()[0] == True:
-            map_now = map
-            bg_now = background
-            window.blit(bg_now, [0, 0])
-            for i in range(len(map_now)):
-                for j in range(len(map_now[i])):
-                    # создаём траву
-                    if map_now[i][j] == '*':
-                        platform_rect = platform_img.get_rect()
-                        platform_rect.x = platform_rect.width * j + test
-                        platform_rect.y = platform_rect.height * i + testy
-                        platforms.append(platform_rect)
-                        window.blit(platform_img, platform_rect)
-                    #  создаем землю    
-                    elif map_now[i][j] == '-': 
-                        dirt_rect = dirt_img.get_rect()
-                        dirt_rect.x = dirt_rect.width * j + test
-                        dirt_rect.y = dirt_rect.height * i + testy
-                        dirts.append(dirt_rect)
-                        window.blit(dirt_img, dirt_rect)
+                    
 
     else:       
 
@@ -476,7 +386,6 @@ while True:
                
             man_rect.x += change_x
                 
-        
                 #main_menu = True 
 
         # Твёрдая трава
