@@ -1,0 +1,437 @@
+import pygame
+from random import randint
+import random
+import time
+
+
+pygame.init()
+
+WIDTH = 1200
+HEIGHT = 700
+'''pygame.FULLSCREEN,'''
+
+window = pygame.display.set_mode((WIDTH, HEIGHT), pygame.RESIZABLE)
+pygame.display.set_caption('King The Fools')
+
+FPS = 120
+clock = pygame.time.Clock()
+
+# иконка игры
+icon_img = pygame.image.load('assets/images/icons/icon.png')
+pygame.display.set_icon(icon_img)
+
+# персонаж
+man_stand = pygame.image.load('assets/images/персонажи/man.png')
+man_left = pygame.transform.flip(man_stand, True, False)
+
+man_stand.set_colorkey([163,73,164])
+man_left.set_colorkey([163,73,164])
+man_now = man_stand
+speed = 5
+change_x = 0
+man = man_stand
+man_rect = man_stand.get_rect()
+man_rect.left = WIDTH // 2
+man_rect.bottom = HEIGHT // 2
+
+man_rect.x = randint(0, WIDTH)
+man_rect.y = 0
+
+jump = False
+# Максимальная высота прыжка
+jump_max = 50
+
+# Изменение прыжка
+jump_count = 0
+
+# Находимся ли в главном меню
+main_menu = True
+# находимся ли мы в выборе уровня
+choice_menu = False
+
+choice_menu2 = False
+
+# СОЗДАЁМ ТЕКСТУРЫ
+platform_img = pygame.image.load('assets/images/компоненты локации/grass.png')
+platform_img = pygame.transform.scale(platform_img, [70, 70])
+
+stone_briks_img = pygame.image.load('assets/images/компоненты локации/stone_bricks.png')
+
+dirt_img = pygame.image.load('assets/images/компоненты локации/dirt.png')
+stone_img = pygame.image.load('assets/images/компоненты локации/stone.png')
+stone_img = pygame.transform.scale(stone_img, [70, 70])
+
+board = pygame.image.load('assets/images/компоненты локации/boards.png') # символ в массиве "b"
+
+alb1_img = pygame.image.load('assets/images/обложки альбомов/alb1.png')
+alb1_rect = alb1_img.get_rect()
+alb1_rect.x = 300
+alb1_rect.y = 150
+
+alb2_img = pygame.image.load('assets/images/обложки альбомов/alb2.png')
+alb2_rect = alb2_img.get_rect()
+alb2_rect.x = 550
+alb2_rect.y = 150
+
+alb3_img = pygame.image.load('assets/images/обложки альбомов/alb3.png')
+alb3_rect = alb3_img.get_rect()
+alb3_rect.x = WIDTH-400
+alb3_rect.y = 150
+
+
+
+# Игрок находится на платформе
+on_platform = False
+on_dirt = False
+on_zish = False
+# экран загрузки
+menu = pygame.image.load('assets/images/backgrounds/менюшки/menu.png')
+menu = pygame.transform.scale(menu, [1200, 700])
+
+choice = pygame.image.load('assets/images/backgrounds/менюшки/choice.png')
+choice2 = pygame.image.load('assets/images/backgrounds/менюшки/choice2.png')
+
+comming_soon_img = pygame.image.load('assets/images/backgrounds/менюшки/comming soon.png')
+
+testy = 2
+test = 2
+
+def move():
+
+    global change_x, man
+
+    man_rect.x += change_x
+    keys = pygame.key.get_pressed()
+
+    def right():
+        #if keys[pygame.K_d]:
+        change_x = speed
+        man = man_stand
+        if man_rect.x >= 1090:
+            test -= 10
+            
+            if man_rect.x > 1090:
+                man_rect.x = 1090
+    def left():        
+        #if keys[pygame.K_a]:
+        change_x = -speed
+        man = man_left
+        if man_rect.x <= 0:
+            test += 10
+            
+            if man_rect.x < 0:
+                man_rect.x = 0
+            
+    if not keys[pygame.K_d] and not keys[pygame.K_a]:
+        
+        change_x = 0
+            
+#print(pygame.mouse.get_pos())
+
+if jump == True:
+    man_rect.y -= jump_count
+    if man_rect.y >= jump_max:
+        jump = False
+    if man_rect.y >= 900:
+        testy -= 20     
+
+#if jump_count > -jump_max or (man_rect.bottom < HEIGHT and on_platform == False):
+    #jump_count -= 1
+    
+else:
+    jump = False
+    on_platform = True
+        
+    man_rect.x += change_x
+
+
+
+# фон
+background = pygame.image.load('assets/images/backgrounds/bg/background.png') # стардантный фон леса
+background = pygame.transform.scale(background, [WIDTH, HEIGHT])
+
+background1 = pygame.image.load('assets/images/backgrounds/bg/dark_forest.png') # фон внезапной головы(в начале)
+background1 = pygame.transform.scale(background1, [WIDTH, HEIGHT])
+
+background5 = pygame.image.load('assets/images/backgrounds/bg/dark_forest.jpeg') # фон лесника и охотника
+background5 = pygame.transform.scale(background5, [WIDTH, HEIGHT])
+
+background2 = pygame.image.load('assets/images/backgrounds/bg/pupet_wizard_background.png') # фон куклы кодуна
+background2 = pygame.transform.scale(background2, [WIDTH, HEIGHT])
+
+background3 = pygame.image.load('assets/images/backgrounds/bg/room_zish.png') # комната злодея(начало и конец злодея и шапки)
+background3 = pygame.transform.scale(background3, [WIDTH, HEIGHT])
+
+background4 = pygame.image.load('assets/images/backgrounds/bg/market.png') # базар (злодей и шапка)
+background4 = pygame.transform.scale(background4, [WIDTH, HEIGHT])
+
+# фоны для Утреннего рассвета
+
+sky_clouds = pygame.image.load('assets/images/backgrounds/Утренний рассвет/в небе голубом облака плывут как корабли.jpeg')
+in_the_ravine_under_the_mountain = pygame.image.load('assets/images/backgrounds/Утренний рассвет/в овраге под горою шелестела листва.jpeg')
+dont_wake_up_the_roosters_in_the_villages = pygame.image.load('assets/images/backgrounds/Утренний рассвет/еще не пробудились петухи в деревнях.jpeg')
+cows_trampled_the_grass_in_the_fields = pygame.image.load('assets/images/backgrounds/Утренний рассвет/коровами истоптана трава на полях.jpeg')
+there_are_no_fishermen_on_the_lake = pygame.image.load('assets/images/backgrounds/Утренний рассвет/рыбаков на озере пока не видать.jpeg')
+the_sun_was_rising_above_the_earth = pygame.image.load('assets/images/backgrounds/Утренний рассвет/солнце поднималось над землей.jpeg')
+warm_breeze_over_the_earth = pygame.image.load('assets/images/backgrounds/Утренний рассвет/теплый ветерок мчится над поверхностью земли.jpeg')
+
+# фон на данный момент
+bg_now = background
+
+# Кнопка начала игры
+start_btn = pygame.image.load('assets/images/кнопки/play_btn.png')
+start_btn = pygame.transform.scale(start_btn, [278, 80])
+start_rect = start_btn.get_rect()
+start_rect.x = WIDTH // 2 - (278//2)
+start_rect.y = HEIGHT // 2 + 65
+
+# Кнопка просмотра управления
+
+management_btn = pygame.image.load('assets/images/кнопки/management_btn.png')
+management_btn = pygame.transform.scale(management_btn, [278, 80])
+management_btn_rect = management_btn.get_rect()
+management_btn_rect.x = WIDTH // 2 - (278//2)
+management_btn_rect.y = HEIGHT // 2 + 160
+
+# Кнопка выхода из игры
+exit_btn = pygame.image.load('assets/images/кнопки/exit_btn.png')
+exit_btn = pygame.transform.scale(exit_btn, [278, 80])
+exit_rect = exit_btn.get_rect()
+exit_rect.x = WIDTH // 2 - (278//2)
+exit_rect.y = HEIGHT // 2 + 255
+
+# Фон просмотра управления
+
+management_bg = pygame.image.load('assets/images/backgrounds/менюшки/management_bg.png')
+
+# песни альбома "Камнем по голове"
+
+villain_and_hat = pygame.image.load('assets/images/Камнем по голове/Злодей и Шапка.png')
+villain_and_hat = pygame.transform.scale(villain_and_hat, [100, 100])
+villain_and_hat_rect = villain_and_hat.get_rect()
+villain_and_hat_rect.x = 300
+villain_and_hat_rect.y = 250 # 150
+
+sudden_head_img = pygame.image.load('assets/images/Камнем по голове/Внезапная голова.png')
+sudden_head_img = pygame.transform.scale(sudden_head_img, [100, 100])
+sudden_head_rect = sudden_head_img.get_rect()
+sudden_head_rect.x = 550
+sudden_head_rect.y = 250 # 150
+
+fool_and_lightning = pygame.image.load('assets/images/Камнем по голове/дурак и молния.png')
+fool_and_lightning = pygame.transform.scale(fool_and_lightning, [100, 100])
+fool_and_lightning_rect = fool_and_lightning.get_rect()
+fool_and_lightning_rect.x = WIDTH-400
+fool_and_lightning_rect.y = 250 # 150
+
+
+# песни альбома "Будь как дома путник"
+
+forester_img = pygame.image.load("assets/images/Будь как дома путник/Лесник.png")
+forester_img = pygame.transform.scale(forester_img, [100, 100])
+forester_img_rect = forester_img.get_rect()
+forester_img_rect.x = 300
+forester_img_rect.y = 150
+
+hunter_img = pygame.image.load("assets/images/Будь как дома путник/Охотник.png")
+hunter_img = pygame.transform.scale(hunter_img, [100, 100])
+hunter_img_rect = hunter_img.get_rect()
+hunter_img_rect.x = WIDTH-400
+hunter_img_rect.y = 150
+
+meeting_img = pygame.image.load("assets/images/Будь как дома путник/Собрание.png")
+meeting_img = pygame.transform.scale(meeting_img, [100, 100])
+meeting_img_rect = meeting_img.get_rect()
+meeting_img_rect.x = 550
+meeting_img_rect.y = 150
+
+# песни из Акустического альбома
+
+puppet_of_wizard = pygame.image.load('assets/images/Акустический альбом/кукла колдуна.png')
+puppet_of_wizard = pygame.transform.scale(puppet_of_wizard, [100, 100])
+puppet_of_wizard_rect = puppet_of_wizard.get_rect()
+puppet_of_wizard_rect.x = 300
+puppet_of_wizard_rect.y = 150
+
+morning_dawn = pygame.image.load('assets/images/Акустический альбом/утренний рассвет.png')
+morning_dawn = pygame.transform.scale(morning_dawn, [100, 100])
+morning_dawn_rect = morning_dawn.get_rect()
+morning_dawn_rect.x = 550
+morning_dawn_rect.y = 150
+
+villain_and_hat_map = [
+    '                                                         ',
+    '                                                         ',  
+    '                                                         ',
+    '                                                         ',
+    '                                                         ',
+    '                                                         ',
+    '                                                         ',
+    '                                                         ',
+    'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb',
+    'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb',
+    'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb',
+    '---------------------------------------------------------',
+    '---------------------------------------------------------',
+]
+
+platforms = []
+dirts = []
+stones = []
+boards = []
+
+map_now = villain_and_hat_map
+run = False
+frame = 0
+
+choice_lvl = False
+choice_lvl2 = False
+
+alb1_selected = False  # Отвечает за состояние выбора альбома
+level_selected = False  # Отвечает за выбор уровня
+main_menu = True       # Начинаем с главного меню
+
+while True:
+    man_old = man_rect.copy()
+    
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            exit()
+
+        # Обрабатываем нажатия клавиш
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE:
+                show = False
+                jump = True
+                jump_count = jump_max
+                on_platform = False
+                if man_rect.y <= 460:
+                    testy += 20
+            
+            if event.key == pygame.K_ESCAPE:
+                main_menu = True
+                choice_menu = False
+                choice_menu2 = False
+                alb1_selected = False  # Сброс состояния альбома
+                level_selected = False  # Сброс уровня
+                man_rect.x = randint(0, WIDTH)
+                man_rect.y = 776
+        
+        # Обрабатываем клики мыши
+        if event.type == pygame.MOUSEBUTTONUP:
+            pos = event.pos
+
+            if main_menu:
+                if start_rect.collidepoint(pos):
+                    main_menu = False
+                    choice_menu = True
+                    choice_menu2 = False
+                elif exit_rect.collidepoint(pos):
+                    exit()
+                elif management_btn_rect.collidepoint(pos):
+                    window.blit(management_bg, [0, 0])
+            
+            elif choice_menu and not alb1_selected:
+                if alb1_rect.collidepoint(pos):
+                    choice_menu = False
+                    choice_menu2 = True
+                    alb1_selected = True  # Фиксируем выбор альбома
+            
+            elif alb1_selected and not level_selected:
+                if villain_and_hat_rect.collidepoint(pos):
+                    map_now = villain_and_hat_map
+                    bg_now = background3
+                    level_selected = True  # Фиксируем выбор уровня
+
+    # Отрисовка экрана
+    if main_menu:
+        window.blit(menu, [0, 0])
+        pygame.mixer.music.load("assets/sounds/король и шут.mp3")
+        pygame.mixer.music.play(-1)
+        window.blit(start_btn, start_rect)
+        window.blit(exit_btn, exit_rect)
+        window.blit(management_btn, management_btn_rect)
+    
+    elif choice_menu and not alb1_selected:
+        window.blit(choice2, [0, 0])
+        window.blit(alb1_img, alb1_rect)
+
+    elif alb1_selected and not level_selected:  
+        window.blit(choice, [0, 0])
+        window.blit(villain_and_hat, villain_and_hat_rect)
+        window.blit(sudden_head_img, sudden_head_rect)
+        window.blit(fool_and_lightning, fool_and_lightning_rect)
+
+    elif level_selected:  # Если уровень выбран, рисуем его
+        window.blit(bg_now, [0, 0])
+        for i in range(len(map_now)):
+            for j in range(len(map_now[i])):
+                if map_now[i][j] == 'b':
+                    board_rect = board.get_rect()
+                    board_rect.x = board_rect.width * j + test
+                    board_rect.y = board_rect.height * i + testy
+                    boards.append(board_rect)
+                    window.blit(board, board_rect)
+                    
+    else:       
+
+        #print(pygame.mouse.get_pos())
+
+        if jump == True:
+            man_rect.y -= jump_count
+            if man_rect.y >= jump_max:
+                jump = False
+            if man_rect.y >= 900:
+                testy -= 20     
+
+        #if jump_count > -jump_max or (man_rect.bottom < HEIGHT and on_platform == False):
+            #jump_count -= 1
+            
+        else:
+            jump = False
+            on_platform = True
+               
+            man_rect.x += change_x
+                
+                #main_menu = True 
+
+        # Твёрдая трава
+        if man_rect.bottom > HEIGHT:
+            man_rect.bottom = HEIGHT
+            jump = False
+            on_platform = True
+        
+        man_rect.x += change_x
+        
+        for platform in platforms:
+            if man_rect.colliderect(platform):
+                if man_rect.left < man_old.left:
+                    man_rect.x -= change_x
+
+                if man_rect.right > man_old.right:
+                    man_rect.x -= change_x
+
+            if man_rect.colliderect(platform):
+                if man_rect.bottom > man_old.bottom:
+                    jump = False
+                    on_platform = True
+                    man_rect.bottom = platform.top
+
+            if man_rect.colliderect(platform) and man_rect.y < platform.height:
+                jump = False
+                on_platform = True
+                man_rect.top = man_old.top
+
+        if on_platform == True:
+            manrect_next = man_rect.copy()
+            manrect_next.y += 1
+
+            if manrect_next.collidelist(platforms) == -1:
+                jump = True
+                on_platform = False
+                jump_count = -20
+
+        window.blit(man, man_rect)
+        
+    pygame.display.update()
+    clock.tick(FPS)

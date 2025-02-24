@@ -20,7 +20,7 @@ clock = pygame.time.Clock()
 icon_img = pygame.image.load('assets/images/icons/icon.png')
 pygame.display.set_icon(icon_img)
 
-# персонаж
+# Горшок
 man_stand = pygame.image.load('assets/images/персонажи/man.png')
 man_left = pygame.transform.flip(man_stand, True, False)
 
@@ -36,6 +36,32 @@ man_rect.bottom = HEIGHT // 2
 
 man_rect.x = randint(0, WIDTH)
 man_rect.y = 0
+
+# Злодей и Шпака
+villian = pygame.image.load('assets/images/персонажи/villian.png')
+villian_left = pygame.transform.flip(villian, True, False)
+
+villian_now = villian
+villian_rect = villian.get_rect()
+villian_rect.left = WIDTH // 2
+villian_rect.bottom = HEIGHT // 2
+
+villian_rect.x = randint(0, WIDTH)
+villian_rect.y = 560
+
+# Торговец
+trader = pygame.image.load('assets/images/персонажи/trader.png')
+trader_left = pygame.transform.flip(trader, True, False)
+
+trader_now = trader
+trader_rect = trader.get_rect()
+trader_rect.left = WIDTH // 2
+trader_rect.bottom = HEIGHT // 2
+'''
+trader_rect.x = ...
+trader_rect.y = ...
+'''
+
 
 jump = False
 # Максимальная высота прыжка
@@ -61,7 +87,7 @@ dirt_img = pygame.image.load('assets/images/компоненты локации/
 stone_img = pygame.image.load('assets/images/компоненты локации/stone.png')
 stone_img = pygame.transform.scale(stone_img, [70, 70])
 
-boards = pygame.image.load('assets/images/компаненты локации/boards.png') # символ в массиве "b"
+board = pygame.image.load('assets/images/компоненты локации/boards.png') # символ в массиве "b"
 
 alb1_img = pygame.image.load('assets/images/обложки альбомов/alb1.png')
 alb1_rect = alb1_img.get_rect()
@@ -206,23 +232,24 @@ management_bg = pygame.image.load('assets/images/backgrounds/менюшки/mana
 
 # песни альбома "Камнем по голове"
 
-fool_and_lightning = pygame.image.load('assets/images/Камнем по голове/дурак и молния.png')
-fool_and_lightning = pygame.transform.scale(fool_and_lightning, [100, 100])
-fool_and_lightning_rect = fool_and_lightning.get_rect()
-fool_and_lightning_rect.x = 300
-fool_and_lightning_rect.y = 150
+villain_and_hat = pygame.image.load('assets/images/Камнем по голове/Злодей и Шапка.png')
+villain_and_hat = pygame.transform.scale(villain_and_hat, [100, 100])
+villain_and_hat_rect = villain_and_hat.get_rect()
+villain_and_hat_rect.x = 300
+villain_and_hat_rect.y = 250 # 150
 
 sudden_head_img = pygame.image.load('assets/images/Камнем по голове/Внезапная голова.png')
 sudden_head_img = pygame.transform.scale(sudden_head_img, [100, 100])
 sudden_head_rect = sudden_head_img.get_rect()
-sudden_head_rect.x = WIDTH-400
-sudden_head_rect.y = 150
+sudden_head_rect.x = 550
+sudden_head_rect.y = 250 # 150
 
-villain_and_hat = pygame.image.load('assets/images/Камнем по голове/Злодей и Шапка.png')
-villain_and_hat = pygame.transform.scale(villain_and_hat, [100, 100])
-villain_and_hat_rect = fool_and_lightning.get_rect()
-villain_and_hat_rect.x = 550
-villain_and_hat_rect.y = 150
+fool_and_lightning = pygame.image.load('assets/images/Камнем по голове/дурак и молния.png')
+fool_and_lightning = pygame.transform.scale(fool_and_lightning, [100, 100])
+fool_and_lightning_rect = fool_and_lightning.get_rect()
+fool_and_lightning_rect.x = WIDTH-400
+fool_and_lightning_rect.y = 250 # 150
+
 
 # песни альбома "Будь как дома путник"
 
@@ -276,9 +303,8 @@ villain_and_hat_map = [
 
 platforms = []
 dirts = []
-zishs = []
 stones = []
-vgs = []
+boards = []
 
 map_now = villain_and_hat_map
 run = False
@@ -287,85 +313,92 @@ frame = 0
 choice_lvl = False
 choice_lvl2 = False
 
-count_click = 0
+alb1_selected = False  # Отвечает за состояние выбора альбома
+level_selected = False  # Отвечает за выбор уровня
+main_menu = True       # Начинаем с главного меню
+
 while True:
-    man_old = man_rect.copy()    
+    man_old = man_rect.copy()
+    
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             exit()
+
+        # Обрабатываем нажатия клавиш
         if event.type == pygame.KEYDOWN:
-            # прыжок
             if event.key == pygame.K_SPACE:
                 show = False
                 jump = True
                 jump_count = jump_max
                 on_platform = False
-                # сдвижение камеры при возвышении
                 if man_rect.y <= 460:
                     testy += 20
-    
-            # кнопка ESCAPE
+            
             if event.key == pygame.K_ESCAPE:
                 main_menu = True
                 choice_menu = False
                 choice_menu2 = False
+                alb1_selected = False  # Сброс состояния альбома
+                level_selected = False  # Сброс уровня
                 man_rect.x = randint(0, WIDTH)
                 man_rect.y = 776
-    
-    if main_menu == True:
+        
+        # Обрабатываем клики мыши
+        if event.type == pygame.MOUSEBUTTONUP:
+            pos = event.pos
+
+            if main_menu:
+                if start_rect.collidepoint(pos):
+                    main_menu = False
+                    choice_menu = True
+                    choice_menu2 = False
+                elif exit_rect.collidepoint(pos):
+                    exit()
+                elif management_btn_rect.collidepoint(pos):
+                    window.blit(management_bg, [0, 0])
+            
+            elif choice_menu and not alb1_selected:
+                if alb1_rect.collidepoint(pos):
+                    choice_menu = False
+                    choice_menu2 = True
+                    alb1_selected = True  # Фиксируем выбор альбома
+            
+            elif alb1_selected and not level_selected:
+                if villain_and_hat_rect.collidepoint(pos):
+                    map_now = villain_and_hat_map
+                    bg_now = background3
+                    level_selected = True  # Фиксируем выбор уровня
+
+    # Отрисовка экрана
+    if main_menu:
         window.blit(menu, [0, 0])
-        music1 = pygame.mixer.music.load("assets/sounds/король и шут.mp3")
+        pygame.mixer.music.load("assets/sounds/король и шут.mp3")
         pygame.mixer.music.play(-1)
         window.blit(start_btn, start_rect)
         window.blit(exit_btn, exit_rect)
         window.blit(management_btn, management_btn_rect)
-
-        # Позиция указателя мыши
-        pos = pygame.mouse.get_pos()
-
-        if start_rect.collidepoint(pos) and pygame.mouse.get_pressed()[0] == True:
-            main_menu = False
-            choice_menu = True
-            print("choice_menu", choice_menu)
-        elif exit_rect.collidepoint(pos) and pygame.mouse.get_pressed()[0] == True:
-            exit()
-        elif management_btn_rect.collidepoint(pos) and pygame.mouse.get_pressed()[0] == True:
-            window.blit(management_bg, [0, 0])
-        
-    elif main_menu == False:
+    
+    elif choice_menu and not alb1_selected:
         window.blit(choice2, [0, 0])
         window.blit(alb1_img, alb1_rect)
-        pos = pygame.mouse.get_pos()
-        print("choice_menu2.1", choice_menu2)
-        # альбом камнем по голове
-        if alb1_rect.collidepoint(pos) and pygame.MOUSEBUTTONDOWN == True and choice_menu2 == False:
-            choice_menu = False
-            choice_menu2 = True
-            choice_lvl = True
-            #print("choice_menu 0.2", choice_menu)
-            #print("choice_menu2.2", choice_menu2)
-        if choice_menu2 == True:
-            window.blit(choice, [0, 0])
-            window.blit(sudden_head_img, sudden_head_rect)
-            window.blit(villain_and_hat, villain_and_hat_rect)
-            window.blit(fool_and_lightning, fool_and_lightning_rect) # во второй бетке))) 
-            count_click = 10   
-        # Злодей и Шапка
-        if villain_and_hat_rect.collidepoint(pos) and pygame.mouse.get_pressed()[0] == True:
-            map_now = villain_and_hat_map
-            bg_now = background3
-            window.blit(bg_now, [0, 0])
-            for i in range(len(map_now)):
-                for j in range(len(map_now[i])):
-                    # рисуем доски
-                    if map_now[i][j] == '*':
-                        platform_rect = platform_img.get_rect()
-                        platform_rect.x = platform_rect.width * j + test
-                        platform_rect.y = platform_rect.height * i + testy
-                        platforms.append(platform_rect)
-                        window.blit(platform_img, platform_rect)
-                    
 
+    elif alb1_selected and not level_selected:  
+        window.blit(choice, [0, 0])
+        window.blit(villain_and_hat, villain_and_hat_rect)
+        window.blit(sudden_head_img, sudden_head_rect)
+        window.blit(fool_and_lightning, fool_and_lightning_rect)
+
+    elif level_selected:  # Если уровень выбран, рисуем его
+        window.blit(bg_now, [0, 0])
+        for i in range(len(map_now)):
+            for j in range(len(map_now[i])):
+                if map_now[i][j] == 'b':
+                    board_rect = board.get_rect()
+                    board_rect.x = board_rect.width * j + test
+                    board_rect.y = board_rect.height * i + testy
+                    boards.append(board_rect)
+                    window.blit(board, board_rect)
+                    
     else:       
 
         #print(pygame.mouse.get_pos())
