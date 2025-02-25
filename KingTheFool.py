@@ -57,6 +57,8 @@ trader_now = trader
 trader_rect = trader.get_rect()
 trader_rect.left = WIDTH // 2
 trader_rect.bottom = HEIGHT // 2
+
+
 '''
 trader_rect.x = ...
 trader_rect.y = ...
@@ -81,13 +83,14 @@ choice_menu2 = False
 platform_img = pygame.image.load('assets/images/компоненты локации/grass.png')
 platform_img = pygame.transform.scale(platform_img, [70, 70])
 
-stone_briks_img = pygame.image.load('assets/images/компоненты локации/stone_bricks.png')
+stone_briks_img = pygame.image.load('assets/images/компоненты локации/stone_bricks.png') # символ в массиве "s"
 
 dirt_img = pygame.image.load('assets/images/компоненты локации/dirt.png')
 stone_img = pygame.image.load('assets/images/компоненты локации/stone.png')
 stone_img = pygame.transform.scale(stone_img, [70, 70])
 
 board = pygame.image.load('assets/images/компоненты локации/boards.png') # символ в массиве "b"
+board2 = pygame.image.load('assets/images/компоненты локации/boards2.png') # символ в массиве "d"
 
 alb1_img = pygame.image.load('assets/images/обложки альбомов/alb1.png')
 alb1_rect = alb1_img.get_rect()
@@ -186,7 +189,7 @@ background2 = pygame.image.load('assets/images/backgrounds/bg/pupet_wizard_backg
 background2 = pygame.transform.scale(background2, [WIDTH, HEIGHT])
 
 background3 = pygame.image.load('assets/images/backgrounds/bg/room_zish.png') # комната злодея(начало и конец злодея и шапки)
-background3 = pygame.transform.scale(background3, [WIDTH, HEIGHT])
+#background3 = pygame.transform.scale(background3, [WIDTH, HEIGHT])
 
 background4 = pygame.image.load('assets/images/backgrounds/bg/market.png') # базар (злодей и шапка)
 background4 = pygame.transform.scale(background4, [WIDTH, HEIGHT])
@@ -286,17 +289,17 @@ morning_dawn_rect.x = 550
 morning_dawn_rect.y = 150
 
 villain_and_hat_map = [
-    '                                                         ',
-    '                                                         ',  
-    '                                                         ',
-    '                                                         ',
-    '                                                         ',
-    '                                                         ',
-    '                                                         ',
-    '                                                         ',
-    'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb',
-    'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb',
-    'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb',
+    'sdddddddddddddddddddddddddddddddddddddddddddddddddddddddd',
+    's               s                                        ',  
+    's               s                                        ',
+    's               s                                        ',
+    's               s                                        ',
+    's                                                        ',
+    's                                                        ',
+    's                                                        ',
+    'sbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb',
+    'sbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb',
+    'sbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb',
     '---------------------------------------------------------',
     '---------------------------------------------------------',
 ]
@@ -305,6 +308,8 @@ platforms = []
 dirts = []
 stones = []
 boards = []
+boards2 = []
+stone_bricks = []
 
 map_now = villain_and_hat_map
 run = False
@@ -398,6 +403,19 @@ while True:
                     board_rect.y = board_rect.height * i + testy
                     boards.append(board_rect)
                     window.blit(board, board_rect)
+                elif map_now[i][j] == 'd':
+                    board2_rect = board2.get_rect()
+                    board2_rect.x = board2_rect.width * j + test
+                    board2_rect.y = board2_rect.height * i + testy
+                    boards2.append(board2_rect)
+                    window.blit(board2, board2_rect)    
+                elif map_now[i][j] == 's':
+                    stone_briks_rect = stone_briks_img.get_rect()
+                    stone_briks_rect.x = stone_briks_rect.width * j + test
+                    stone_briks_rect.y = stone_briks_rect.height *i + testy
+                    stone_bricks.append(stone_briks_rect)
+                    window.blit(stone_briks_img, stone_briks_rect)
+
                     
     else:       
 
