@@ -21,7 +21,7 @@ icon_img = pygame.image.load('assets/images/icons/icon.png')
 pygame.display.set_icon(icon_img)
 
 # Персонажи игры
-
+person_now = None
 # Горшок
 gorshok_stand = pygame.image.load('assets/images/персонажи/gorshok.png')
 gorshok_left = pygame.transform.flip(gorshok_stand, True, False)
@@ -29,8 +29,7 @@ gorshok_left = pygame.transform.flip(gorshok_stand, True, False)
 gorshok_stand.set_colorkey([163,73,164])
 gorshok_left.set_colorkey([163,73,164])
 man_now = gorshok_stand
-speed = 6
-change_x = 0
+
 gorshok = gorshok_stand
 gorshok_rect = gorshok_stand.get_rect()
 gorshok_rect.left = WIDTH // 2
@@ -86,10 +85,13 @@ on_grass_img = pygame.transform.scale(on_grass_img, [70, 70])
 stone_briks_img = pygame.image.load('assets/images/компоненты локации/stone_bricks.png') # символ в массиве "s"
 
 dirt_img = pygame.image.load('assets/images/компоненты локации/dirt.png')
+
 stone_img = pygame.image.load('assets/images/компоненты локации/stone.png')
 stone_img = pygame.transform.scale(stone_img, [70, 70])
 
 board = pygame.image.load('assets/images/компоненты локации/boards.png') # символ в массиве "b"
+
+door_img = pygame.image.load('assets/images/компоненты локации/door1.png') # символ в массиве "d"
 
 alb1_img = pygame.image.load('assets/images/обложки альбомов/alb1.png')
 alb1_rect = alb1_img.get_rect()
@@ -202,19 +204,19 @@ puppet_of_wizard_rect.x = 300
 puppet_of_wizard_rect.y = 150
 
 villain_and_hat_map = [
-    'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb',
-    's               s                                        ',  
-    's               s                                        ',
-    's               s                                        ',
-    's               s                                        ',
-    's                                                        ',
-    's                                                        ',
-    's                                                        ',
-    'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb',
-    'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb',
-    'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb',
-    '---------------------------------------------------------',
-    '---------------------------------------------------------',
+    'sbbbbbbbbbbbbbsbbbbbbbbbsbbbsss',
+    's             s         s   sss',  
+    's             s         s   sss',
+    's             s         s   sss',
+    's             s         s   sss',
+    's                           sss',
+    's                           sss',
+    's                         d sss',
+    'sbbbbbbbbbbbbbbbbbbbbbbbbbbbsss',
+    'sbbbbbbbbbbbbbbbbbbbbbbbbbbbsss',
+    'sbbbbbbbbbbbbbbbbbbbbbbbbbbbsss',
+    '-------------------------------',
+    '-------------------------------',
 ]
 
 grasses = []
@@ -222,10 +224,11 @@ dirts = []
 stones = []
 boards = []
 stone_bricks = []
+doors = []
 
 map_now = villain_and_hat_map
-run = False
-frame = 0
+# run = False
+# frame = 0
 
 choice_lvl = False
 choice_lvl2 = False
@@ -236,22 +239,27 @@ test = 2 # сдвижение по оси x
 
 camera_x = 0
 
+speed = 4
+change_x = 0
+
 # Управление
-def move(character_rect, speed):
-    global jump, jump_count, on_grass, on_board, on_brick, testy, test, bg_now_coords_x
+def move(character_rect, character_left_rect, speed):
+    global jump, jump_count, on_grass, on_board, on_brick, testy, test, bg_now_coords_x, person_now
 
     keys = pygame.key.get_pressed()
 
     # Горизонтальное движение
     change_x = 0
     if keys[pygame.K_a]:  # Движение влево
+        person_now = character_left_rect
         change_x = -speed
-        test += 10
-        bg_now_coords_x += 10
+        # test += 6
+        # bg_now_coords_x += 6
 
     if keys[pygame.K_d]:  # Движение вправо
         change_x = speed
-        test -= 10
+        # test -= 6
+        # bg_now_coords_x -= 6
         
 
     # Прыжок
@@ -281,10 +289,14 @@ def move(character_rect, speed):
         jump_count = 0  # Сбрасываем счётчик прыжка
 
     # Ограничение персонажа по X, чтобы он не уходил за пределы экрана
-    if character_rect.x + change_x < 0:  # Левый край экрана
-        character_rect.x = 0
-    elif character_rect.x + change_x > WIDTH - character_rect.width:  # Правый край экрана
-        character_rect.x = WIDTH - character_rect.width
+    if character_rect.x + change_x < 50:  # Левый край экрана
+        character_rect.x = 50
+        test += 6
+        bg_now_coords_x += 6
+    elif character_rect.x + change_x > (WIDTH - character_rect.width)-50:  # Правый край экрана
+        character_rect.x = (WIDTH - character_rect.width)-50
+        test -= 6
+        bg_now_coords_x -= 6
     else:
         character_rect.x += change_x  # Обновление позиции    
 
@@ -377,10 +389,17 @@ while True:
         window.blit(sudden_head_img, sudden_head_rect)
         window.blit(fool_and_lightning, fool_and_lightning_rect)
 
-    elif villian_and_hat_lvl:  # Если уровень Злодей и Шапка выбран, рисуем его
-        pygame.mixer.music.pause()
+    villian_and_hat_music = False
+    
+    if villian_and_hat_lvl:  # Если уровень Злодей и Шапка выбран, рисуем его
+        if not villian_and_hat_music:
+            pygame.mixer.music.load("assets/sounds/Злодей и шапка.mp3")
+            pygame.mixer.music.set_volume(1)
+            pygame.mixer.music.play(-1)
+            villian_and_hat_music = True
+        
         window.blit(bg_now, [bg_now_coords_x, 0])
-        move(villian_rect, speed)
+        move(villian_rect, villian_left, speed)
         for i in range(len(map_now)):
             for j in range(len(map_now[i])):
                 if map_now[i][j] == 'b':
@@ -392,31 +411,18 @@ while True:
                 elif map_now[i][j] == 's':
                     stone_briks_rect = stone_briks_img.get_rect()
                     stone_briks_rect.x = stone_briks_rect.width * j + test
-                    stone_briks_rect.y = stone_briks_rect.height *i + testy
+                    stone_briks_rect.y = stone_briks_rect.height * i + testy
                     stone_bricks.append(stone_briks_rect)
                     window.blit(stone_briks_img, stone_briks_rect)
+                elif map_now[i][j] == 'd':
+                    door_rect = door_img.get_rect()
+                    door_rect.x = door_rect.width * j + test
+                    door_rect.y = door_rect.height * i + testy
+                    doors.append(door_rect)
+                    window.blit(door_img, door_rect)
+                
         window.blit(villian_now, villian_rect)
         pygame.display.update()
-                    
-    else:       
 
-        #print(pygame.mouse.get_pos())
-
-        if jump == True:
-            gorshok_rect.y -= jump_count
-            if gorshok_rect.y >= jump_max:
-                jump = False
-            if gorshok_rect.y >= 900:
-                testy -= 20     
-
-        #if jump_count > -jump_max or (man_rect.bottom < HEIGHT and on_grass == False):
-            #jump_count -= 1
-            
-        else:
-            jump = False
-            on_grass = True
-               
-            # gorshok_rect.x += change_x
-        
     pygame.display.update()
     clock.tick(FPS)
