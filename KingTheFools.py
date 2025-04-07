@@ -79,20 +79,24 @@ choice_menu = False
 choice_menu2 = False
 
 # СОЗДАЁМ ТЕКСТУРЫ
-on_grass_img = pygame.image.load('assets/images/компоненты локации/grass.png')
-on_grass_img = pygame.transform.scale(on_grass_img, [70, 70])
+grass_img = pygame.image.load('assets/images/компоненты локации/grass.png') # символ в массиве "g"
 
-stone_briks_img = pygame.image.load('assets/images/компоненты локации/stone_bricks.png') # символ в массиве "s"
+stone_bricks_img = pygame.image.load('assets/images/компоненты локации/stone_bricks.png') # символ в массиве "s"
 
-dirt_img = pygame.image.load('assets/images/компоненты локации/dirt.png')
+dirt_img = pygame.image.load('assets/images/компоненты локации/dirt.png') # символ в массиве "з"
 
 stone_img = pygame.image.load('assets/images/компоненты локации/stone.png')
-stone_img = pygame.transform.scale(stone_img, [70, 70])
 
-board = pygame.image.load('assets/images/компоненты локации/boards.png') # символ в массиве "b"
+board_img = pygame.image.load('assets/images/компоненты локации/boards.png') # символ в массиве "b"
 
-door_img = pygame.image.load('assets/images/компоненты локации/door1.png') # символ в массиве "d"
+board2_img = pygame.image.load('assets/images/компоненты локации/boards2.png') # символ в массиве "б"
 
+tree_img = pygame.image.load('assets/images/компоненты локации/tree.png') # символ в массиве "t"
+
+# плэйт позволяющий сменить локацию
+next_location = pygame.image.load('assets/images/компоненты локации/next_location.png') # символ в массиве "e"
+
+# альбомы
 alb1_img = pygame.image.load('assets/images/обложки альбомов/alb1.png')
 alb1_rect = alb1_img.get_rect()
 alb1_rect.x = 300
@@ -211,21 +215,38 @@ villain_and_hat_map = [
     's             s         s   sss',
     's                           sss',
     's                           sss',
-    's                         d sss',
-    'sbbbbbbbbbbbbbbbbbbbbbbbbbbbsss',
+    's                           sss',
+    'sbbbbbbbbbbbbbbbbbbbbbbbbbebsss',
     'sbbbbbbbbbbbbbbbbbbbbbbbbbbbsss',
     'sbbbbbbbbbbbbbbbbbbbbbbbbbbbsss',
     '-------------------------------',
     '-------------------------------',
 ]
 
+villain_and_hat_map_2 = [
+    '                                                                                             ',
+    '                                                                                             ',
+    '                                                                                             ',
+    'ssssssssssss                                                                                 ',
+    'ssssssssssss                                                                                 ',
+    'ssssssssssss                                                                                 ',
+    'ssssssssssss           tбббt                                                                 ',
+    'ssssssssssss           tбббt                                                                 ',
+    'ssssssssssss           tбббt                                                                 ',
+    'ssssssssssssggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg',
+    'ззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззз',
+    'ззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззз',
+    'ззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззз',
+]
+
 grasses = []
 dirts = []
 stones = []
 boards = []
+boards2 = []
 stone_bricks = []
-doors = []
-
+trees = []
+next_lvl = []
 map_now = villain_and_hat_map
 # run = False
 # frame = 0
@@ -242,6 +263,8 @@ camera_x = 0
 speed = 4
 change_x = 0
 
+location_switched = False
+
 # Управление
 def move(character_rect, character_left_rect, speed):
     global jump, jump_count, on_grass, on_board, on_brick, testy, test, bg_now_coords_x, person_now
@@ -250,6 +273,7 @@ def move(character_rect, character_left_rect, speed):
 
     # Горизонтальное движение
     change_x = 0
+    change_y = 0
     if keys[pygame.K_a]:  # Движение влево
         person_now = character_left_rect
         change_x = -speed
@@ -289,12 +313,12 @@ def move(character_rect, character_left_rect, speed):
         jump_count = 0  # Сбрасываем счётчик прыжка
 
     # Ограничение персонажа по X, чтобы он не уходил за пределы экрана
-    if character_rect.x + change_x < 50:  # Левый край экрана
-        character_rect.x = 50
+    if character_rect.x + change_x < 200:  # Левый край экрана
+        character_rect.x = 200
         test += 6
         bg_now_coords_x += 6
-    elif character_rect.x + change_x > (WIDTH - character_rect.width)-50:  # Правый край экрана
-        character_rect.x = (WIDTH - character_rect.width)-50
+    elif character_rect.x + change_x > (WIDTH - character_rect.width)-200:  # Правый край экрана
+        character_rect.x = (WIDTH - character_rect.width)-200
         test -= 6
         bg_now_coords_x -= 6
     else:
@@ -403,24 +427,55 @@ while True:
         for i in range(len(map_now)):
             for j in range(len(map_now[i])):
                 if map_now[i][j] == 'b':
-                    board_rect = board.get_rect()
+                    board_rect = board_img.get_rect()
                     board_rect.x = board_rect.width * j + test
                     board_rect.y = board_rect.height * i + testy
                     boards.append(board_rect)
-                    window.blit(board, board_rect)   
+                    window.blit(board_img, board_rect)   
                 elif map_now[i][j] == 's':
-                    stone_briks_rect = stone_briks_img.get_rect()
+                    stone_briks_rect = stone_bricks_img.get_rect()
                     stone_briks_rect.x = stone_briks_rect.width * j + test
                     stone_briks_rect.y = stone_briks_rect.height * i + testy
                     stone_bricks.append(stone_briks_rect)
-                    window.blit(stone_briks_img, stone_briks_rect)
-                elif map_now[i][j] == 'd':
-                    door_rect = door_img.get_rect()
-                    door_rect.x = door_rect.width * j + test
-                    door_rect.y = door_rect.height * i + testy
-                    doors.append(door_rect)
-                    window.blit(door_img, door_rect)
-                
+                    window.blit(stone_bricks_img, stone_briks_rect)   
+                elif map_now[i][j] == 'e':
+                    next_location_rect = next_location.get_rect()
+                    next_location_rect.x = next_location_rect.width * j + test
+                    next_location_rect.y = next_location_rect.height * i + testy
+                    next_lvl.append(next_location_rect)
+                    window.blit(next_location, next_location_rect)
+                elif map_now[i][j] == 'g':
+                    grass_rect = grass_img.get_rect()
+                    grass_rect.x = grass_rect.width * j + test
+                    grass_rect.y = grass_rect.height * i + testy
+                    grasses.append(grass_rect)
+                    window.blit(grass_img, grass_rect)
+                elif map_now[i][j] == 'з':
+                    dirt_rect = grass_img.get_rect()
+                    dirt_rect.x = grass_rect.width * j + test
+                    dirt_rect.y = grass_rect.height * i + testy
+                    dirts.append(dirt_rect)
+                    window.blit(dirt_img, dirt_rect)
+                elif map_now[i][j] == 't':
+                    tree_rect = tree_img.get_rect()
+                    tree_rect.x = tree_rect.width * j + test
+                    tree_rect.y = tree_rect.height * i + testy
+                    trees.append(tree_rect)
+                    window.blit(tree_img, tree_rect)
+                elif map_now[i][j] == 'б':
+                    board2_rect = board2_img.get_rect()
+                    board2_rect.x = board2_rect.width * j + test
+                    board2_rect.y = board2_rect.height * i + testy
+                    boards2.append(board2_rect)
+                    window.blit(board2_img, board2_rect)
+
+        if next_location_rect.collidepoint(pos):
+            bg_now = background
+            bg_now_coords_x = 0
+            map_now = villain_and_hat_map_2
+            change_x = 50
+            
+
         window.blit(villian_now, villian_rect)
         pygame.display.update()
 
