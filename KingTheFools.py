@@ -8,6 +8,7 @@ pygame.init()
 
 WIDTH = 1200
 HEIGHT = 700
+VIRTUAL_RES = (WIDTH, HEIGHT)
 '''pygame.FULLSCREEN,'''
 
 window = pygame.display.set_mode((WIDTH, HEIGHT), pygame.RESIZABLE)
@@ -93,8 +94,22 @@ board2_img = pygame.image.load('assets/images/компоненты локаци�
 
 tree_img = pygame.image.load('assets/images/компоненты локации/tree.png') # символ в массиве "t"
 
+door1_img = pygame.image.load('assets/images/компоненты локации/door1.png') # символ в массиве "1"
+door2_img = pygame.image.load('assets/images/компоненты локации/door2.png') # символ в массиве "2"
+
+plant1_img = pygame.image.load('assets/images/компоненты локации/plant1.png') # символ в массиве "$"
+plant2_img = pygame.image.load('assets/images/компоненты локации/plant2.png') # символ в массиве "%"
+
+tablet_img = pygame.image.load('assets/images/компоненты локации/tablet_villian_and_hat.png') # символ в массиве "y"(игрек)
+tablet_img.set_colorkey([0,0,0])
+
+market_tablet_img = pygame.image.load('assets/images/компоненты локации/market_tablet.png') # символ в массиве "Y"
+market_tablet_img.set_colorkey([0,0,0])
+
 # плэйт позволяющий сменить локацию
 next_location = pygame.image.load('assets/images/компоненты локации/next_location.png') # символ в массиве "e"
+
+next_location2 = pygame.image.load('assets/images/компоненты локации/next_location2.png') # символ в массиве "q"
 
 # альбомы
 alb1_img = pygame.image.load('assets/images/обложки альбомов/alb1.png')
@@ -141,7 +156,6 @@ background2 = pygame.image.load('assets/images/backgrounds/bg/pupet_wizard_backg
 background2 = pygame.transform.scale(background2, [WIDTH, HEIGHT])
 
 background3 = pygame.image.load('assets/images/backgrounds/bg/room_zish.png') # комната злодея(начало и конец злодея и шапки)
-#background3 = pygame.transform.scale(background3, [WIDTH, HEIGHT])
 
 background4 = pygame.image.load('assets/images/backgrounds/bg/market.png') # базар (злодей и шапка)
 background4 = pygame.transform.scale(background4, [WIDTH, HEIGHT])
@@ -214,8 +228,8 @@ villain_and_hat_map = [
     's             s         s   sss',
     's             s         s   sss',
     's                           sss',
-    's                           sss',
-    's                           sss',
+    's                         1 sss',
+    's                         2 sss',
     'sbbbbbbbbbbbbbbbbbbbbbbbbbebsss',
     'sbbbbbbbbbbbbbbbbbbbbbbbbbbbsss',
     'sbbbbbbbbbbbbbbbbbbbbbbbbbbbsss',
@@ -224,19 +238,35 @@ villain_and_hat_map = [
 ]
 
 villain_and_hat_map_2 = [
-    '                                                                                             ',
-    '                                                                                             ',
-    '                                                                                             ',
-    'ssssssssssss                                                                                 ',
-    'ssssssssssss                                                                                 ',
-    'ssssssssssss                                                                                 ',
-    'ssssssssssss           tбббt                                                                 ',
-    'ssssssssssss           tбббt                                                                 ',
-    'ssssssssssss           tбббt                                                                 ',
-    'ssssssssssssggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg',
-    'ззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззз',
-    'ззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззз',
-    'ззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззз',
+    '                                                                                   ',
+    '                                                                                   ',
+    '                                                                                   ',
+    'ssssssssssss                                                                       ',
+    'ssssssssssss                                                                       ',
+    'ssssssssssss                                                                       ',
+    'ssssssssssss                                                                       ',
+    'sssssssssss1                                                                       ',
+    'sssssssssss2    % $$$%$   %  $ $%  %   y  $ % $% $   %%  $ $ %%%   $%$  %$ $    Y  ',
+    'ssssssssssssgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggqggg',
+    'ззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззз',
+    'ззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззз',
+    'ззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззз',
+]
+
+villain_and_hat_map_3 = [
+    '                                          ',
+    '                                          ',
+    '                                          ',
+    '                                          ',
+    '                                          ',
+    '                                          ',
+    '                                          ',
+    '                                          ',
+    '                                          ',
+    'gggggggggggggggggggggggggggggggggggggggggg',
+    'зззззззззззззззззззззззззззззззззззззззззз',
+    'зззззззззззззззззззззззззззззззззззззззззз',
+    'зззззззззззззззззззззззззззззззззззззззззз'
 ]
 
 grasses = []
@@ -246,7 +276,14 @@ boards = []
 boards2 = []
 stone_bricks = []
 trees = []
+doors1 = []
+doors2 = []
+plants1 = []
+plants2 = []
+tablets = []
+market_tablets = []
 next_lvl = []
+next_lvl2 = []
 map_now = villain_and_hat_map
 # run = False
 # frame = 0
@@ -277,14 +314,9 @@ def move(character_rect, character_left_rect, speed):
     if keys[pygame.K_a]:  # Движение влево
         person_now = character_left_rect
         change_x = -speed
-        # test += 6
-        # bg_now_coords_x += 6
 
     if keys[pygame.K_d]:  # Движение вправо
         change_x = speed
-        # test -= 6
-        # bg_now_coords_x -= 6
-        
 
     # Прыжок
     if keys[pygame.K_SPACE] and on_grass:
@@ -334,9 +366,10 @@ villian_and_hat_lvl = False  # Отвечает за выбор уровня З�
 main_menu = True       # Начинаем с главного меню
 
 while True:
-    man_old = gorshok_rect.copy()
+    #man_old = gorshok_rect.copy()
     
     for event in pygame.event.get():
+        
         if event.type == pygame.QUIT:
             exit()
 
@@ -383,6 +416,9 @@ while True:
             
             elif alb1_selected:
                 if villain_and_hat_rect.collidepoint(pos):
+                    pygame.mixer.music.load("assets/sounds/Злодей и шапка.mp3")
+                    pygame.mixer.music.set_volume(0.05)
+                    pygame.mixer.music.play(-1)
                     print("Выбран уровень: Злодей и шапка")
                     map_now = villain_and_hat_map
                     bg_now = background3
@@ -417,9 +453,6 @@ while True:
     
     if villian_and_hat_lvl:  # Если уровень Злодей и Шапка выбран, рисуем его
         if not villian_and_hat_music:
-            pygame.mixer.music.load("assets/sounds/Злодей и шапка.mp3")
-            pygame.mixer.music.set_volume(1)
-            pygame.mixer.music.play(-1)
             villian_and_hat_music = True
         
         window.blit(bg_now, [bg_now_coords_x, 0])
@@ -444,6 +477,12 @@ while True:
                     next_location_rect.y = next_location_rect.height * i + testy
                     next_lvl.append(next_location_rect)
                     window.blit(next_location, next_location_rect)
+                elif map_now[i][j] == 'q':
+                    next_location_rect2 = next_location2.get_rect()
+                    next_location_rect2.x = next_location_rect2.width * j + test
+                    next_location_rect2.y = next_location_rect2.height * i + testy
+                    next_lvl2.append(next_location_rect2)
+                    window.blit(next_location2, next_location_rect2)
                 elif map_now[i][j] == 'g':
                     grass_rect = grass_img.get_rect()
                     grass_rect.x = grass_rect.width * j + test
@@ -468,14 +507,49 @@ while True:
                     board2_rect.y = board2_rect.height * i + testy
                     boards2.append(board2_rect)
                     window.blit(board2_img, board2_rect)
-
+                elif map_now[i][j] == '1':
+                    door1_rect = door1_img.get_rect()
+                    door1_rect.x = door1_rect.width * j + test
+                    door1_rect.y = door1_rect.height * i + testy
+                    doors1.append(door1_rect)
+                    window.blit(door1_img, door1_rect)
+                elif map_now[i][j] == '2':
+                    door2_rect = door1_img.get_rect()
+                    door2_rect.x = door2_rect.width * j + test
+                    door2_rect.y = door2_rect.height * i + testy
+                    doors2.append(door2_rect)
+                    window.blit(door2_img, door2_rect)
+                elif map_now[i][j] == '$':
+                    plant1_rect = plant1_img.get_rect()
+                    plant1_rect.x = plant1_rect.width * j + test
+                    plant1_rect.y = plant1_rect.height * i + testy
+                    plants1.append(plant1_rect)
+                    window.blit(plant1_img, plant1_rect)
+                elif map_now[i][j] == '%':
+                    plant2_rect = plant2_img.get_rect()
+                    plant2_rect.x = plant2_rect.width * j + test
+                    plant2_rect.y = plant2_rect.height * i + testy
+                    plants2.append(plant2_rect)
+                    window.blit(plant2_img, plant2_rect)
+                elif map_now[i][j] == 'y':
+                    tablet_rect = tablet_img.get_rect()
+                    tablet_rect.x = tablet_rect.width * j + test
+                    tablet_rect.y = tablet_rect.height * i + testy
+                    tablets.append(tablet_rect)
+                    window.blit(tablet_img, tablet_rect)
+                elif map_now[i][j] == 'Y':
+                    market_tablet_rect = market_tablet_img.get_rect()
+                    market_tablet_rect.x = market_tablet_rect.width * j + test
+                    market_tablet_rect.y = market_tablet_rect.height * i + testy
+                    market_tablets.append(market_tablet_rect)
+                    window.blit(market_tablet_img, market_tablet_rect)
+                    
         if next_location_rect.collidepoint(pos):
             bg_now = background
             bg_now_coords_x = 0
             map_now = villain_and_hat_map_2
             change_x = 50
             
-
         window.blit(villian_now, villian_rect)
         pygame.display.update()
 
