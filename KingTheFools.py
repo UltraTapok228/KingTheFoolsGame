@@ -107,9 +107,10 @@ market_tablet_img = pygame.image.load('assets/images/компоненты лок
 market_tablet_img.set_colorkey([0,0,0])
 
 # плэйт позволяющий сменить локацию
-next_location = pygame.image.load('assets/images/компоненты локации/next_location.png') # символ в массиве "e"
+next_location = pygame.image.load('assets/images/компоненты локации/next_location.png') # символ в массиве "e" (латиница)
 
-next_location2 = pygame.image.load('assets/images/компоненты локации/next_location2.png') # символ в массиве "q"
+next_location_2 = pygame.image.load('assets/images/компоненты локации/next_location2.png') # символ в массиве "q"
+next_location2_rect = next_location_2.get_rect()
 
 # альбомы
 alb1_img = pygame.image.load('assets/images/обложки альбомов/alb1.png')
@@ -283,7 +284,7 @@ plants2 = []
 tablets = []
 market_tablets = []
 next_lvl = []
-next_lvl2 = []
+next_lvl_2 = []
 map_now = villain_and_hat_map
 # run = False
 # frame = 0
@@ -471,18 +472,6 @@ while True:
                     stone_briks_rect.y = stone_briks_rect.height * i + testy
                     stone_bricks.append(stone_briks_rect)
                     window.blit(stone_bricks_img, stone_briks_rect)   
-                elif map_now[i][j] == 'e':
-                    next_location_rect = next_location.get_rect()
-                    next_location_rect.x = next_location_rect.width * j + test
-                    next_location_rect.y = next_location_rect.height * i + testy
-                    next_lvl.append(next_location_rect)
-                    window.blit(next_location, next_location_rect)
-                elif map_now[i][j] == 'q':
-                    next_location_rect2 = next_location2.get_rect()
-                    next_location_rect2.x = next_location_rect2.width * j + test
-                    next_location_rect2.y = next_location_rect2.height * i + testy
-                    next_lvl2.append(next_location_rect2)
-                    window.blit(next_location2, next_location_rect2)
                 elif map_now[i][j] == 'g':
                     grass_rect = grass_img.get_rect()
                     grass_rect.x = grass_rect.width * j + test
@@ -543,13 +532,35 @@ while True:
                     market_tablet_rect.y = market_tablet_rect.height * i + testy
                     market_tablets.append(market_tablet_rect)
                     window.blit(market_tablet_img, market_tablet_rect)
+                elif map_now[i][j] == 'e':
+                    next_location_rect = next_location.get_rect()
+                    next_location_rect.x = next_location_rect.width * j + test
+                    next_location_rect.y = next_location_rect.height * i + testy
+                    next_lvl.append(next_location_rect)
+                    window.blit(next_location, next_location_rect)
+                elif map_now[i][j] == 'q':
+                    next_location2_rect = next_location_2.get_rect()
+                    next_location2_rect.x = next_location2_rect.width * j + test
+                    next_location2_rect.y = next_location2_rect.width * i + testy
+                    next_lvl_2.append(next_location2_rect)
+                    window.blit(next_location_2, next_location2_rect)
                     
+                
+                
         if next_location_rect.collidepoint(pos):
             bg_now = background
             bg_now_coords_x = 0
             map_now = villain_and_hat_map_2
             change_x = 50
             
+            # villian_rect.x = 250
+        
+        if next_location2_rect.collidepoint(pos):
+            bg_now = background4
+            bg_now_coords_x = 0
+            map_now = villain_and_hat_map_3
+            change_x = 50
+
         window.blit(villian_now, villian_rect)
         pygame.display.update()
 
