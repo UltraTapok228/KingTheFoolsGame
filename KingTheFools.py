@@ -298,13 +298,16 @@ test = 2 # сдвижение по оси x
 
 camera_x = 0
 
-speed = 4
+speed = 5
 change_x = 0
 
 location_switched = False
 
+# глобальная переменная для отслежжки направления
+last_direction = "right"
+
 # Управление
-def move(character_rect, character_left_rect, speed):
+def move(character_rect, character_left_rect, character_right_rect, speed):
     global jump, jump_count, on_grass, on_board, on_brick, testy, test, bg_now_coords_x, person_now
 
     keys = pygame.key.get_pressed()
@@ -312,13 +315,22 @@ def move(character_rect, character_left_rect, speed):
     # Горизонтальное движение
     change_x = 0
     change_y = 0
+    if keys[pygame.K_a] and keys[pygame.K_d]:
+        if last_direction == "left":
+            person_now = character_left_rect
+        else:
+            person_now = character_left_rect
+        change_x = 0 # персонаж не движется, если нажаты обе клавиши
+
     if keys[pygame.K_a]:  # Движение влево
-        person_now = character_left_rect
+        person_now = character_left_rect  # Обновляем спрайт для движения влево
+        last_direction = "left"
         change_x = -speed
-
     if keys[pygame.K_d]:  # Движение вправо
+        person_now = character_right_rect  # Обновляем спрайт для движения вправо
+        last_direction = "right"
         change_x = speed
-
+    
     # Прыжок
     if keys[pygame.K_SPACE] and on_grass:
         jump = True
@@ -355,10 +367,7 @@ def move(character_rect, character_left_rect, speed):
         test -= 6
         bg_now_coords_x -= 6
     else:
-        character_rect.x += change_x  # Обновление позиции    
-
-        # Обновление позиции
-        character_rect.x += change_x
+        character_rect.x += change_x  # Обновление позиции
 
 # альбом камнем по голове
 alb1_selected = False  # Отвечает за состояние выбора альбома
@@ -455,9 +464,10 @@ while True:
     if villian_and_hat_lvl:  # Если уровень Злодей и Шапка выбран, рисуем его
         if not villian_and_hat_music:
             villian_and_hat_music = True
-        
+            person_now = villian
+
         window.blit(bg_now, [bg_now_coords_x, 0])
-        move(villian_rect, villian_left, speed)
+        move(villian_rect, villian_left, villian, speed)
         for i in range(len(map_now)):
             for j in range(len(map_now[i])):
                 if map_now[i][j] == 'b':
@@ -543,17 +553,18 @@ while True:
                     next_location2_rect.x = next_location2_rect.width * j + test
                     next_location2_rect.y = next_location2_rect.width * i + testy
                     next_lvl_2.append(next_location2_rect)
-                    window.blit(next_location_2, next_location2_rect)
-                    
-                
-                
-        if next_location_rect.collidepoint(pos):
-            bg_now = background
-            bg_now_coords_x = 0
-            map_now = villain_and_hat_map_2
-            change_x = 50
+                    window.blit(next_location_2, next_location2_rect)       
+    if villian_and_hat_lvl:
+        # Перемещаем проверку столкновения внутрь блока villian_and_hat_lvl
+        try:        
+            if next_location_rect.collidepoint(pos):
+                bg_now = background
+                bg_now_coords_x = 0
+                map_now = villain_and_hat_map_2
+                change_x = 50
+        except NameError:
+            pass # Игнорируем ошибку, если next_location_rect ещё не определён
             
-            # villian_rect.x = 250
         
         if next_location2_rect.collidepoint(pos):
             bg_now = background4
@@ -561,7 +572,7 @@ while True:
             map_now = villain_and_hat_map_3
             change_x = 50
 
-        window.blit(villian_now, villian_rect)
+        window.blit(person_now, villian_rect)
         pygame.display.update()
 
     pygame.display.update()
