@@ -239,19 +239,19 @@ villain_and_hat_map = [
 ]
 
 villain_and_hat_map_2 = [
-    '                                                                                   ',
-    '                                                                                   ',
-    '                                                                                   ',
-    'ssssssssssss                                                                       ',
-    'ssssssssssss                                                                       ',
-    'ssssssssssss                                                                       ',
-    'ssssssssssss                                                                       ',
-    'sssssssssss1                                                                       ',
-    'sssssssssss2    % $$$%$   %  $ $%  %   y  $ % $% $   %%  $ $ %%%   $%$  %$ $    Y  ',
-    'ssssssssssssgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggqggg',
-    'ззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззз',
-    'ззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззз',
-    'ззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззз',
+    '                                                                                       ',
+    '                                                                                       ',
+    '                                                                                       ',
+    'ssssssssssssssss                                                                       ',
+    'ssssssssssssssss                                                                       ',
+    'ssssssssssssssss                                                                       ',
+    'ssssssssssssssss                                                                       ',
+    'sssssssssssssss1                                                                       ',
+    'sssssssssssssss2    % $$$%$   %  $ $%  %   y  $ % $% $   %%  $ $ %%%   $%$  %$ $    Y  ',
+    'ssssssssssssssssgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggqggg',
+    'ззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззз',
+    'ззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззз',
+    'ззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззз',
 ]
 
 villain_and_hat_map_3 = [
@@ -315,12 +315,13 @@ def move(character_rect, character_left_rect, character_right_rect, speed):
     # Горизонтальное движение
     change_x = 0
     change_y = 0
+    '''
     if keys[pygame.K_a] and keys[pygame.K_d]:
         if last_direction == "left":
             person_now = character_left_rect
         else:
             person_now = character_left_rect
-        change_x = 0 # персонаж не движется, если нажаты обе клавиши
+        change_x = 0 # персонаж не движется, если нажаты обе клавиши'''
 
     if keys[pygame.K_a]:  # Движение влево
         person_now = character_left_rect  # Обновляем спрайт для движения влево
