@@ -106,6 +106,18 @@ tablet_img.set_colorkey([0,0,0])
 market_tablet_img = pygame.image.load('assets/images/компоненты локации/market_tablet.png') # символ в массиве "Y"
 market_tablet_img.set_colorkey([0,0,0])
 
+barrel1_img = pygame.image.load('assets/images/компоненты локации/barrel1.png') # cимвол в массиве "#"
+barrel1_img = pygame.transform.scale(barrel1_img, (70, 70))
+
+barrel2_img = pygame.image.load('assets/images/компоненты локации/barrel2.png') # cимвол в массиве "№"
+barrel2_img = pygame.transform.scale(barrel2_img, (70, 70))
+
+barrel3_img = pygame.image.load('assets/images/компоненты локации/barrel3.png') # cимвол в массиве "?"
+barrel3_img = pygame.transform.scale(barrel3_img, (70, 70))
+
+barrel4_img = pygame.image.load('assets/images/компоненты локации/barrel4.png') # cимвол в массиве "&"
+barrel4_img = pygame.transform.scale(barrel4_img, (70, 70))
+
 # плэйт позволяющий сменить локацию
 next_location = pygame.image.load('assets/images/компоненты локации/next_location.png') # символ в массиве "e" (латиница)
 
@@ -239,35 +251,35 @@ villain_and_hat_map = [
 ]
 
 villain_and_hat_map_2 = [
-    '                                                                                       ',
-    '                                                                                       ',
-    '                                                                                       ',
-    'ssssssssssssssss                                                                       ',
-    'ssssssssssssssss                                                                       ',
-    'ssssssssssssssss                                                                       ',
-    'ssssssssssssssss                                                                       ',
-    'sssssssssssssss1                                                                       ',
-    'sssssssssssssss2    % $$$%$   %  $ $%  %   y  $ % $% $   %%  $ $ %%%   $%$  %$ $    Y  ',
-    'ssssssssssssssssgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggqggg',
-    'ззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззз',
-    'ззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззз',
-    'ззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззз',
+    '                                                                              ',
+    '                                                                              ',
+    '                                                                              ',
+    'sssssss                                                                       ',
+    'sssssss                                                                       ',
+    'sssssss                                                                       ',
+    'sssssss                                                                       ',
+    'ssssss1                                                                       ',
+    'ssssss2    % $$$%$   %  $ $%  %   y  $ % $% $   %%  $ $ %%%   $%$  %$ $    Y  ',
+    'sssssssgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggqggg',
+    'зззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззз',
+    'зззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззз',
+    'зззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззз'
 ]
 
 villain_and_hat_map_3 = [
-    '                                          ',
-    '                                          ',
-    '                                          ',
-    '                                          ',
-    '                                          ',
-    '                                          ',
-    '                                          ',
-    '                                          ',
-    '                                          ',
-    'gggggggggggggggggggggggggggggggggggggggggg',
-    'зззззззззззззззззззззззззззззззззззззззззз',
-    'зззззззззззззззззззззззззззззззззззззззззз',
-    'зззззззззззззззззззззззззззззззззззззззззз'
+    '                                                                                                                              ',
+    '                                                                                                                              ',
+    '                                                                                                                              ',
+    '                                                                                                                              ',
+    '                                                                                                                              ',
+    '                                                                                                                              ',
+    '                                                                                                                              ',
+    '                                                                                                                              ',
+    '                                    #№?&                                                                                      ',
+    'gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg',
+    'зззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззз',
+    'зззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззз',
+    'зззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззз'
 ]
 
 grasses = []
@@ -285,6 +297,10 @@ tablets = []
 market_tablets = []
 next_lvl = []
 next_lvl_2 = []
+barrels_1 = []
+barrels_2 = []
+barrels_3 = []
+barrels_4 = []
 map_now = villain_and_hat_map
 # run = False
 # frame = 0
@@ -327,10 +343,14 @@ def move(character_rect, character_left_rect, character_right_rect, speed):
         person_now = character_left_rect  # Обновляем спрайт для движения влево
         last_direction = "left"
         change_x = -speed
+        test += speed
+        bg_now_coords_x += speed
     if keys[pygame.K_d]:  # Движение вправо
         person_now = character_right_rect  # Обновляем спрайт для движения вправо
         last_direction = "right"
         change_x = speed
+        test -= speed
+        bg_now_coords_x -= speed
     
     # Прыжок
     if keys[pygame.K_SPACE] and on_grass:
@@ -386,13 +406,6 @@ while True:
 
         # Обрабатываем нажатия клавиш
         if event.type == pygame.KEYDOWN:
-            '''if event.key == pygame.K_SPACE:
-                show = False
-                jump = True
-                jump_count = jump_max
-                on_grass = False
-                if gorshok_rect.y <= 460:
-                    testy += 20'''
             
             if event.key == pygame.K_ESCAPE:
                 main_menu = True
@@ -552,26 +565,63 @@ while True:
                 elif map_now[i][j] == 'q':
                     next_location2_rect = next_location_2.get_rect()
                     next_location2_rect.x = next_location2_rect.width * j + test
-                    next_location2_rect.y = next_location2_rect.width * i + testy
+                    next_location2_rect.y = next_location2_rect.height * i + testy
                     next_lvl_2.append(next_location2_rect)
-                    window.blit(next_location_2, next_location2_rect)       
+                    window.blit(next_location_2, next_location2_rect) 
+                elif map_now[i][j] == '#':  
+                    barrel1_rect = barrel1_img.get_rect()
+                    barrel1_rect.x = barrel1_rect.width * j + test
+                    barrel1_rect.y = barrel1_rect.height * i + testy
+                    barrels_1.append(barrel1_rect)
+                    window.blit(barrel1_img, barrel1_rect)
+                elif map_now[i][j] == '№':
+                    barrel2_rect = barrel2_img.get_rect()
+                    barrel2_rect.x = barrel2_rect.width * j + test
+                    barrel2_rect.y = barrel2_rect.height * i + testy
+                    barrels_2.append(barrel2_rect)
+                    window.blit(barrel2_img, barrel2_rect)    
+                elif map_now[i][j] == '?':
+                    barrel3_rect = barrel3_img.get_rect()
+                    barrel3_rect.x = barrel3_rect.width * j + test
+                    barrel3_rect.y = barrel3_rect.height * i + testy
+                    barrels_3.append(barrel3_rect)
+                    window.blit(barrel3_img, barrel3_rect)
+                elif map_now[i][j] == '&':
+                    barrel4_rect = barrel4_img.get_rect()
+                    barrel4_rect.x = barrel4_rect.width * j + test
+                    barrel4_rect.y = barrel4_rect.height * i + testy
+                    barrels_4.append(barrel4_rect)
+                    window.blit(barrel4_img, barrel4_rect)
+
     if villian_and_hat_lvl:
         # Перемещаем проверку столкновения внутрь блока villian_and_hat_lvl
         try:        
             if next_location_rect.collidepoint(pos):
+                #test = 0
+                #testy = 0
+                location_switched = True
                 bg_now = background
                 bg_now_coords_x = 0
                 map_now = villain_and_hat_map_2
                 change_x = 50
+                
+                
         except NameError:
             pass # Игнорируем ошибку, если next_location_rect ещё не определён
             
-        
-        if next_location2_rect.collidepoint(pos):
-            bg_now = background4
-            bg_now_coords_x = 0
-            map_now = villain_and_hat_map_3
-            change_x = 50
+        try:
+            if next_location2_rect.collidepoint(pos):
+                #test = 0
+                #testy = 0
+                bg_now = background4
+                bg_now_coords_x = 0
+                map_now = villain_and_hat_map_3
+                change_x = 50
+                #pygame.mixer.music.load("assets/sounds/толпа.mp3")
+                #pygame.mixer.music.set_volume(0.1)
+                #pygame.mixer.music.play(-1)
+        except NameError:
+            pass
 
         window.blit(person_now, villian_rect)
         pygame.display.update()
