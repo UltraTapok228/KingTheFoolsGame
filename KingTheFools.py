@@ -86,13 +86,14 @@ stone_bricks_img = pygame.image.load('assets/images/компоненты лок�
 
 dirt_img = pygame.image.load('assets/images/компоненты локации/dirt.png') # символ в массиве "з"
 
-stone_img = pygame.image.load('assets/images/компоненты локации/stone.png')
+stone_img = pygame.image.load('assets/images/компоненты локации/stone.png') # символ в массиве "с" (кириллица)
 
 board_img = pygame.image.load('assets/images/компоненты локации/boards.png') # символ в массиве "b"
 
 board2_img = pygame.image.load('assets/images/компоненты локации/boards2.png') # символ в массиве "б"
 
 tree_img = pygame.image.load('assets/images/компоненты локации/tree.png') # символ в массиве "t"
+tree_left_img = pygame.transform.rotate(tree_img, 90)
 
 door1_img = pygame.image.load('assets/images/компоненты локации/door1.png') # символ в массиве "1"
 door2_img = pygame.image.load('assets/images/компоненты локации/door2.png') # символ в массиве "2"
@@ -117,6 +118,9 @@ barrel3_img = pygame.transform.scale(barrel3_img, (70, 70))
 
 barrel4_img = pygame.image.load('assets/images/компоненты локации/barrel4.png') # cимвол в массиве "&"
 barrel4_img = pygame.transform.scale(barrel4_img, (70, 70))
+
+wall_img = pygame.image.load('assets/images/компоненты локации/wall.png') # символ в массиве "w"
+window_img = pygame.image.load('assets/images/компоненты локации/window.png') # символ в массиве "W"
 
 # плэйт позволяющий сменить локацию
 next_location = pygame.image.load('assets/images/компоненты локации/next_location.png') # символ в массиве "e" (латиница)
@@ -173,6 +177,11 @@ background3 = pygame.image.load('assets/images/backgrounds/bg/room_zish.png') # 
 background4 = pygame.image.load('assets/images/backgrounds/bg/market.png') # базар (злодей и шапка)
 background4 = pygame.transform.scale(background4, [WIDTH, HEIGHT])
 
+village_bg = pygame.image.load('assets/images/backgrounds/bg/village_bg.png') # деревня (злодей и шапка)
+seller_of_nightmares_bg = pygame.image.load('assets/images/backgrounds/bg/seller_of_nightmares_house.png') # дом продавца кошмаров
+
+seller_of_nightmares_inside_bg = pygame.image.load('assets/images/backgrounds/bg/seller_of_nightmares_house_inside.png')
+
 # фон на данный момент
 bg_now = background
 bg_now_coords_x = 0
@@ -198,6 +207,13 @@ exit_rect = exit_btn.get_rect()
 exit_rect.x = WIDTH // 2 - (278//2)
 exit_rect.y = HEIGHT // 2 + 255
 
+# Кнопка входа в дом продавца кошмаров
+entrance_to_house_btn = pygame.image.load('assets/images/кнопки/entrance_to_house_btn.jpg')
+entrance_to_house_btn = pygame.transform.scale(entrance_to_house_btn, [278, 80])
+entrance_to_house_rect = entrance_to_house_btn.get_rect()
+entrance_to_house_rect.x = WIDTH // 2 - (entrance_to_house_rect.width//2)
+entrance_to_house_rect.y = HEIGHT // 2 - (entrance_to_house_rect.height//2) 
+
 # Фон просмотра управления
 management_bg = pygame.image.load('assets/images/backgrounds/менюшки/management_bg.png')
 
@@ -220,20 +236,6 @@ fool_and_lightning_rect = fool_and_lightning.get_rect()
 fool_and_lightning_rect.x = WIDTH-400
 fool_and_lightning_rect.y = 250 # 150
 
-# песни альбома "Будь как дома путник"
-forester_img = pygame.image.load("assets/images/Будь как дома путник/Лесник.png")
-forester_img = pygame.transform.scale(forester_img, [100, 100])
-forester_img_rect = forester_img.get_rect()
-forester_img_rect.x = 300
-forester_img_rect.y = 150
-
-# песни из Акустического альбома
-puppet_of_wizard = pygame.image.load('assets/images/Акустический альбом/кукла колдуна.png')
-puppet_of_wizard = pygame.transform.scale(puppet_of_wizard, [100, 100])
-puppet_of_wizard_rect = puppet_of_wizard.get_rect()
-puppet_of_wizard_rect.x = 300
-puppet_of_wizard_rect.y = 150
-
 villain_and_hat_map = [
     'sbbbbbbbbbbbbbsbbbbbbbbbsbbbsss',
     's             s         s   sss',  
@@ -251,35 +253,51 @@ villain_and_hat_map = [
 ]
 
 villain_and_hat_map_2 = [
-    '                                                                              ',
-    '                                                                              ',
-    '                                                                              ',
-    'sssssss                                                                       ',
-    'sssssss                                                                       ',
-    'sssssss                                                                       ',
-    'sssssss                                                                       ',
-    'ssssss1                                                                       ',
-    'ssssss2    % $$$%$   %  $ $%  %   y  $ % $% $   %%  $ $ %%%   $%$  %$ $    Y  ',
-    'sssssssgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggqggg',
-    'зззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззз',
-    'зззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззз',
-    'зззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззз'
+    'wwwwwwwwwwwwwwwwwwwwwwwt                                   twwwwwww',
+    'wwwwwwwwwwwwwwwwwwwwwWwt                                   twWwwwww',
+    'wwwwwwwwwwwwwwwwwwwwwWwt                                   twWwwwww',
+    'wwwwwwwwwwwwwwwwwwwwwwwt                                   twwwwwww',
+    'TTTTTTTTTTTTTTTTTTTTTTTT                                   TTTTTTTT',
+    'wwwwwwwwwwwwwwwwwwwwwws                                     swwwwww',
+    'wwwwwwwwwwwwwwwwwwwWwws                                     swwwwww',
+    'wwwwwwwwwwwwwwwwwwwWww1                                     swwwwww',
+    'wwwwwwwwwwwwwwwwwwwwww2   y  $ % $% $   %%   %$$ $%         swwwwww',
+    'sssssssssssssssssssssssgggggggggggggggggggggggggggggggggqgggsssssss',
+    'ззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззз',
+    'ззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззз',
+    'ззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззз' 
 ]
 
 villain_and_hat_map_3 = [
-    '                                                                                                                              ',
-    '                                                                                                                              ',
-    '                                                                                                                              ',
-    '                                                                                                                              ',
-    '                                                                                                                              ',
-    '                                                                                                                              ',
-    '                                                                                                                              ',
-    '                                                                                                                              ',
-    '                                    #№?&                                                                                      ',
-    'gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg',
-    'зззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззз',
-    'зззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззз',
-    'зззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззз'
+    '                                                                                                             ',
+    '                                                                                                             ',
+    '                                                                                                             ',
+    '                                                                                                             ',
+    '                                                                                                             ',
+    '                                                                                                             ',
+    '                                                                                                             ',
+    '                                                                                                             ',
+    '                                                                                                             ',
+    'ggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg',
+    'ззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззз',
+    'ззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззз',
+    'ззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззз'
+]
+
+villain_and_hat_map_4 = [
+    '                                                                                          ',
+    '                                                                                          ',
+    '                                                                                          ',
+    '                                                                                          ',
+    '                                                                                          ',
+    '  с                                                                                       ',
+    '  с                                                                                       ',
+    '  с                                                                                       ',
+    ' ссс                                                                                      ',
+    'сссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссс',
+    'сссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссс',
+    'сссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссс',
+    'сссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссс'
 ]
 
 grasses = []
@@ -301,26 +319,20 @@ barrels_1 = []
 barrels_2 = []
 barrels_3 = []
 barrels_4 = []
+walls = []
+windows = []
 map_now = villain_and_hat_map
 # run = False
 # frame = 0
-
-choice_lvl = False
-choice_lvl2 = False
 
 # сдвижение карты при движении игрока
 testy = 2 # сдвижение по оси y
 test = 2 # сдвижение по оси x
 
-camera_x = 0
-
 speed = 5
 change_x = 0
 
 location_switched = False
-
-# глобальная переменная для отслежжки направления
-last_direction = "right"
 
 # Управление
 def move(character_rect, character_left_rect, character_right_rect, speed):
@@ -328,29 +340,23 @@ def move(character_rect, character_left_rect, character_right_rect, speed):
 
     keys = pygame.key.get_pressed()
 
-    # Горизонтальное движение
+    # Горизонтальное и вертикальное движение
     change_x = 0
     change_y = 0
-    '''
-    if keys[pygame.K_a] and keys[pygame.K_d]:
-        if last_direction == "left":
-            person_now = character_left_rect
-        else:
-            person_now = character_left_rect
-        change_x = 0 # персонаж не движется, если нажаты обе клавиши'''
 
     if keys[pygame.K_a]:  # Движение влево
         person_now = character_left_rect  # Обновляем спрайт для движения влево
-        last_direction = "left"
         change_x = -speed
-        test += speed
-        bg_now_coords_x += speed
+        if character_rect.x <= 200:
+            test += speed
+            bg_now_coords_x += speed
     if keys[pygame.K_d]:  # Движение вправо
         person_now = character_right_rect  # Обновляем спрайт для движения вправо
-        last_direction = "right"
         change_x = speed
-        test -= speed
-        bg_now_coords_x -= speed
+        if character_rect.x >= (WIDTH - character_rect.width)-200:
+            character_rect.x >= (WIDTH - character_rect.width)-200
+            test -= speed
+            bg_now_coords_x -= speed
     
     # Прыжок
     if keys[pygame.K_SPACE] and on_grass:
@@ -482,6 +488,7 @@ while True:
 
         window.blit(bg_now, [bg_now_coords_x, 0])
         move(villian_rect, villian_left, villian, speed)
+        change_x = 50
         for i in range(len(map_now)):
             for j in range(len(map_now[i])):
                 if map_now[i][j] == 'b':
@@ -592,36 +599,69 @@ while True:
                     barrel4_rect.y = barrel4_rect.height * i + testy
                     barrels_4.append(barrel4_rect)
                     window.blit(barrel4_img, barrel4_rect)
+                elif map_now[i][j] == 'w':
+                    wall_rect = wall_img.get_rect()
+                    wall_rect.x = wall_rect.width * j + test
+                    wall_rect.y = wall_rect.height * i + testy
+                    walls.append(wall_rect)
+                    window.blit(wall_img, wall_rect)
+                elif map_now[i][j] == 'W':
+                    window_rect = window_img.get_rect()
+                    window_rect.x = wall_rect.width * j + test
+                    window_rect.y = wall_rect.height * i + testy
+                    windows.append(window_rect)
+                    window.blit(window_img, window_rect)
+                elif map_now[i][j] == 'T':
+                    tree_left_rect = tree_left_img.get_rect()
+                    tree_left_rect.x = tree_left_rect.width * j + test
+                    tree_left_rect.y = tree_left_rect.height * i + testy
+                    trees.append(tree_left_rect)
+                    window.blit(tree_left_img, tree_left_rect)
+                elif map_now[i][j] == 'с':
+                    stone_rect = stone_img.get_rect()
+                    stone_rect.x = stone_rect.width * j + test
+                    stone_rect.y = stone_rect.height * i + testy
+                    stones.append(stone_rect)
+                    window.blit(stone_img, stone_rect)
 
     if villian_and_hat_lvl:
         # Перемещаем проверку столкновения внутрь блока villian_and_hat_lvl
         try:        
+            # переход из дома злодея на улицу
             if next_location_rect.collidepoint(pos):
                 #test = 0
                 #testy = 0
                 location_switched = True
-                bg_now = background
+                bg_now = village_bg
                 bg_now_coords_x = 0
                 map_now = villain_and_hat_map_2
                 change_x = 50
                 
-                
+        
         except NameError:
             pass # Игнорируем ошибку, если next_location_rect ещё не определён
-            
+
         try:
+            # переход с улицы к дому продавца кошмаров
             if next_location2_rect.collidepoint(pos):
-                #test = 0
-                #testy = 0
-                bg_now = background4
+                location_switched = True
+                bg_now = seller_of_nightmares_bg
                 bg_now_coords_x = 0
                 map_now = villain_and_hat_map_3
                 change_x = 50
-                #pygame.mixer.music.load("assets/sounds/толпа.mp3")
-                #pygame.mixer.music.set_volume(0.1)
-                #pygame.mixer.music.play(-1)
+                window.blit(entrance_to_house_btn, entrance_to_house_rect)
+            # переход в дом продавца кошмаров
+            if entrance_to_house_rect.collidepoint(pos):
+                location_switched = True
+                bg_now = seller_of_nightmares_inside_bg
+                map_now = villain_and_hat_map_4
+                bg_now_coords_x = 0
+                change_x = 50
+                
+
+
         except NameError:
-            pass
+            pass # Игнорируем ошибку, если next_location_rect2 ещё не определён
 
         window.blit(person_now, villian_rect)
         pygame.display.update()
