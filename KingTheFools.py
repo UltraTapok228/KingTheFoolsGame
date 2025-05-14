@@ -119,8 +119,14 @@ barrel3_img = pygame.transform.scale(barrel3_img, (70, 70))
 barrel4_img = pygame.image.load('assets/images/компоненты локации/barrel4.png') # cимвол в массиве "&"
 barrel4_img = pygame.transform.scale(barrel4_img, (70, 70))
 
+chest_img = pygame.image.load('assets/images/компоненты локации/chest.png') # символ в массиве "h"
+chest_img = pygame.transform.scale(chest_img, (70, 70))
+
 wall_img = pygame.image.load('assets/images/компоненты локации/wall.png') # символ в массиве "w"
 window_img = pygame.image.load('assets/images/компоненты локации/window.png') # символ в массиве "W"
+
+lightning_bag = pygame.image.load('assets/images/компоненты локации/bag_for_lightnig.png') # символ в массиве "L"
+lightning_bag = pygame.transform.scale(lightning_bag, (70, 70))
 
 # плэйт позволяющий сменить локацию
 next_location = pygame.image.load('assets/images/компоненты локации/next_location.png') # символ в массиве "e" (латиница)
@@ -285,19 +291,19 @@ villain_and_hat_map_3 = [
 ]
 
 villain_and_hat_map_4 = [
-    '                                                                                          ',
-    '                                                                                          ',
-    '                                                                                          ',
-    '                                                                                          ',
-    '                                                                                          ',
-    '  с                                                                                       ',
-    '  с                                                                                       ',
-    '  с                                                                                       ',
-    ' ссс                                                                                      ',
-    'сссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссс',
-    'сссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссс',
-    'сссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссс',
-    'сссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссс'
+    'sssssssssssssssssssssssssssssssssssssssssssssssssssst                                           ',
+    'sssssssssssssssssssssssssssssssssssssssssssssssssssst                                           ',
+    'sssssssssssssssssssssssssssssssssssssssssssssssssssst                                           ',
+    'sssssssssssssssssssssssssssssssssssssssssssssssssssst                                           ',
+    'sssssssssssssssssssssssssssssssssssssssssssssssssssst                                           ',
+    'sssssssssssssssssssssssssssssssssssssssssssssssssssst                                           ',
+    'sssssssssssssssssssssssssssssssssssssssssssssssssssst                                           ',
+    'ssssssssssssssssssssssssssssssssssssssssssssssssssss1           h                               ',
+    'ssssssssssssssssssssssssssssssssssssssssssssssssssss2           hhL&                            ',
+    'ссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссccccccc',
+    'ссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссccccccc',
+    'ссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссccccccc',
+    'ссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссccccccc'
 ]
 
 grasses = []
@@ -321,6 +327,8 @@ barrels_3 = []
 barrels_4 = []
 walls = []
 windows = []
+chests = []
+bags = []
 map_now = villain_and_hat_map
 # run = False
 # frame = 0
@@ -482,9 +490,8 @@ while True:
     villian_and_hat_music = False
     
     if villian_and_hat_lvl:  # Если уровень Злодей и Шапка выбран, рисуем его
-        if not villian_and_hat_music:
-            villian_and_hat_music = True
-            person_now = villian
+        
+        person_now = villian
 
         window.blit(bg_now, [bg_now_coords_x, 0])
         move(villian_rect, villian_left, villian, speed)
@@ -623,14 +630,24 @@ while True:
                     stone_rect.y = stone_rect.height * i + testy
                     stones.append(stone_rect)
                     window.blit(stone_img, stone_rect)
-
+                elif map_now[i][j] == 'h':
+                    chest_rect = chest_img.get_rect()
+                    chest_rect.x = chest_rect.width * j + test
+                    chest_rect.y = chest_rect.height * i + testy
+                    chests.append(chest_rect)
+                    window.blit(chest_img, chest_rect)
+                elif map_now[i][j] == 'L':
+                    bag_lightning_rect = lightning_bag.get_rect()
+                    bag_lightning_rect.x = bag_lightning_rect.width * j + test
+                    bag_lightning_rect.y = bag_lightning_rect.height * i + testy
+                    bags.append(lightning_bag)
+                    window.blit(lightning_bag, bag_lightning_rect)
+                    
     if villian_and_hat_lvl:
         # Перемещаем проверку столкновения внутрь блока villian_and_hat_lvl
         try:        
             # переход из дома злодея на улицу
             if next_location_rect.collidepoint(pos):
-                #test = 0
-                #testy = 0
                 location_switched = True
                 bg_now = village_bg
                 bg_now_coords_x = 0
