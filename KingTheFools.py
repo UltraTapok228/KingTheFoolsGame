@@ -255,7 +255,10 @@ fool_and_lightning_rect.x = WIDTH-400
 fool_and_lightning_rect.y = 250 # 150
 
 # шрифты
-cyrillic_old_font = pygame.font.Font('assets/fonts/CyrillicOld.otf', 24)
+cyrillic_old_font = pygame.font.Font('fonts/CyrillicOld.otf', 24)
+text = "Шапка, да не просто шапка, в свое время сам Великий Карл ее носил!"
+text_surface = cyrillic_old_font.render(text, True, (255, 243, 0))  # Создаем поверхность с текстом
+text_rect = text_surface.get_rect(center=(600, 142.5))  # Центрируем текст по X и Y
 
 villain_and_hat_map = [
     'sbbbbbbbbbbbbbsbbbbbbbbbsbbbsss',
@@ -306,19 +309,19 @@ villain_and_hat_map_3 = [
 ]
 
 villain_and_hat_map_4 = [
-    'sssssssssssssssssssssssssssssssssssssssssssssssssssst                                           ',
-    'sssssssssssssssssssssssssssssssssssssssssssssssssssst                                           ',
-    'sssssssssssssssssssssssssssssssssssssssssssssssssssst                                           ',
-    'sssssssssssssssssssssssssssssssssssssssssssssssssssst                                           ',
-    'sssssssssssssssssssssssssssssssssssssssssssssssssssst                                           ',
-    'sssssssssssssssssssssssssssssssssssssssssssssssssssst                                           ',
-    'sssssssssssssssssssssssssssssssssssssssssssssssssssst                                           ',
-    'ssssssssssssssssssssssssssssssssssssssssssssssssssss1           h          п ш                  ',
-    'ssssssssssssssssssssssssssssssssssssssssssssssssssss2           hhL&       h h                  ',
-    'ссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссccccccc',
-    'ссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссccccccc',
-    'ссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссccccccc',
-    'ссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссccccccc'
+    'sssssssssssssssssssssssssssssssssssssssssssssssssssst                                                                    tsssssssssssssss',
+    'sssssssssssssssssssssssssssssssssssssssssssssssssssst                                                                    tsssssssssssssss',
+    'sssssssssssssssssssssssssssssssssssssssssssssssssssst                                                                    tsssssssssssssss',
+    'sssssssssssssssssssssssssssssssssssssssssssssssssssst                                                                    tsssssssssssssss',
+    'sssssssssssssssssssssssssssssssssssssssssssssssssssst                                                                    tsssssssssssssss',
+    'sssssssssssssssssssssssssssssssssssssssssssssssssssst                                                                    tsssssssssssssss',
+    'sssssssssssssssssssssssssssssssssssssssssssssssssssst                                                                    tsssssssssssssss',
+    'ssssssssssssssssssssssssssssssssssssssssssssssssssss1           h          п ш                                           tsssssssssssssss',
+    'ssssssssssssssssssssssssssssssssssssssssssssssssssss2           hhL&       h h                                           tsssssssssssssss',
+    'сссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссtsssssssssssssss',
+    'сссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссtsssssssssssssss',
+    'сссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссtsssssssssssssss',
+    'сссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссtsssssssssssssss'
 ]
 
 grasses = []
@@ -450,6 +453,7 @@ while True:
         # Обрабатываем клики мыши
         if event.type == pygame.MOUSEBUTTONUP:
             pos = event.pos
+            
 
             if main_menu:
                 if start_rect.collidepoint(pos):
@@ -686,6 +690,8 @@ while True:
         except NameError:
             pass # Игнорируем ошибку, если next_location_rect ещё не определён
 
+        mouse_pos = pygame.mouse.get_pos()
+
         try:
             # переход с улицы к дому продавца кошмаров
             if next_location2_rect.collidepoint(pos):
@@ -702,6 +708,9 @@ while True:
                 map_now = villain_and_hat_map_4
                 bg_now_coords_x = 0
                 change_x = 50
+            if hat2_rect.collidepoint(mouse_pos):
+                window.blit(dialog_window_img, [400, 300])
+                window.blit(text_surface, text_rect)
 
         except NameError:
             pass # Игнорируем ошибку, если next_location_rect2 ещё не определён
