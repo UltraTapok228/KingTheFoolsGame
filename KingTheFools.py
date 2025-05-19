@@ -128,6 +128,9 @@ window_img = pygame.image.load('assets/images/компоненты локаци�
 lightning_bag = pygame.image.load('assets/images/компоненты локации/bag_for_lightnig.png') # символ в массиве "L"
 lightning_bag = pygame.transform.scale(lightning_bag, (70, 70))
 
+old_watch_img = pygame.image.load('assets/images/компоненты локации/old_watch.png') # символ в массиве "o" кириллица
+old_watch_img = pygame.transform.scale(old_watch_img, (70, 70))
+
 # шапки для злодей и шапка
 hat_img = pygame.image.load('assets/images/компоненты локации/hat.png') # символ в массиве "п"
 hat_img = pygame.transform.scale(hat_img, (70, 70))
@@ -255,10 +258,33 @@ fool_and_lightning_rect.x = WIDTH-400
 fool_and_lightning_rect.y = 250 # 150
 
 # шрифты
-cyrillic_old_font = pygame.font.Font('fonts/CyrillicOld.otf', 24)
-text = "Шапка, да не просто шапка, в свое время сам Великий Карл ее носил!"
-text_surface = cyrillic_old_font.render(text, True, (255, 243, 0))  # Создаем поверхность с текстом
-text_rect = text_surface.get_rect(center=(600, 142.5))  # Центрируем текст по X и Y
+cyrillic_old_font = pygame.font.Font('fonts/CyrillicOld.otf', 20)
+
+# тексты и реплики
+
+text_villian_and_hat = "Шапка, да не просто шапка,"
+text_surface_villian_and_hat = cyrillic_old_font.render(text_villian_and_hat, True, (255, 243, 0))  # Создаем поверхность с текстом
+text_rect_villian_and_hat = text_surface_villian_and_hat.get_rect(center=(550, 400))  # Центрируем текст по X и Y
+
+text_villian_and_hat_2 = "в свое время сам Великий Карл ее носил!"
+text_surface_villian_and_hat_2 = cyrillic_old_font.render(text_villian_and_hat_2, True, (255, 243, 0))  # Создаем поверхность с текстом
+text_rect_villian_and_hat_2 = text_surface_villian_and_hat_2.get_rect(center=(550, 400))  # Центрируем текст по X и Y
+
+text_villian_and_hat_3 = "Обычный, черный и помятый цилиндр"
+text_surface_villian_and_hat_3 = cyrillic_old_font.render(text_villian_and_hat_3, True, (255, 243, 0))  # Создаем поверхность с текстом
+text_rect_villian_and_hat_3 = text_surface_villian_and_hat_3.get_rect(center=(550, 400))  # Центрируем текст по X и Y
+
+text_villian_ant_hat_4 = "Волшебная сумка, способная поймать молнию"
+text_surface_villian_and_hat_4 = cyrillic_old_font.render(text_villian_ant_hat_4, True, (255, 243, 0))  # Создаем поверхность с текстом
+text_rect_villian_and_hat_4 = text_surface_villian_and_hat_4.get_rect(center=(550, 400))  # Центрируем текст по X и Y
+
+text_villian_and_hat_5 = "    Таинственные часы, мистический "
+text_surface_villian_and_hat_5 = cyrillic_old_font.render(text_villian_and_hat_5, True, (255, 243, 0))  # Создаем поверхность с текстом
+text_rect_villian_and_hat_5 = text_surface_villian_and_hat_5.get_rect(center=(550, 400))  # Центрируем текст по X и Y
+
+text_villian_and_hat_6 = "         проводник с прошлым..."
+text_surface_villian_and_hat_6 = cyrillic_old_font.render(text_villian_and_hat_6, True, (255, 243, 0))  # Создаем поверхность с текстом
+text_rect_villian_and_hat_6 = text_surface_villian_and_hat_6.get_rect(center=(550, 400))  # Центрируем текст по X и Y
 
 villain_and_hat_map = [
     'sbbbbbbbbbbbbbsbbbbbbbbbsbbbsss',
@@ -316,8 +342,8 @@ villain_and_hat_map_4 = [
     'sssssssssssssssssssssssssssssssssssssssssssssssssssst                                                                    tsssssssssssssss',
     'sssssssssssssssssssssssssssssssssssssssssssssssssssst                                                                    tsssssssssssssss',
     'sssssssssssssssssssssssssssssssssssssssssssssssssssst                                                                    tsssssssssssssss',
-    'ssssssssssssssssssssssssssssssssssssssssssssssssssss1           h          п ш                                           tsssssssssssssss',
-    'ssssssssssssssssssssssssssssssssssssssssssssssssssss2           hhL&       h h                                           tsssssssssssssss',
+    'ssssssssssssssssssssssssssssssssssssssssssssssssssss1           h          п ш      о                                    tsssssssssssssss',
+    'ssssssssssssssssssssssssssssssssssssssssssssssssssss2           hhL&       h h      h                                    tsssssssssssssss',
     'сссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссtsssssssssssssss',
     'сссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссtsssssssssssssss',
     'сссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссtsssssssssssssss',
@@ -348,6 +374,7 @@ windows = []
 chests = []
 bags = []
 hats = []
+watches = []
 map_now = villain_and_hat_map
 # run = False
 # frame = 0
@@ -674,6 +701,12 @@ while True:
                     hat2_rect.y = hat2_rect.height * i + testy
                     hats.append(hat2_img)
                     window.blit(hat2_img, hat2_rect)
+                elif map_now[i][j] == 'о':
+                    old_watch_rect = old_watch_img.get_rect()
+                    old_watch_rect.x = old_watch_rect.width * j + test
+                    old_watch_rect.y = old_watch_rect.height * i + testy
+                    watches.append(old_watch_img)
+                    window.blit(old_watch_img, old_watch_rect)
                     
     if villian_and_hat_lvl:
         # Перемещаем проверку столкновения внутрь блока villian_and_hat_lvl
@@ -708,9 +741,24 @@ while True:
                 map_now = villain_and_hat_map_4
                 bg_now_coords_x = 0
                 change_x = 50
+
             if hat2_rect.collidepoint(mouse_pos):
                 window.blit(dialog_window_img, [400, 300])
-                window.blit(text_surface, text_rect)
+                window.blit(text_surface_villian_and_hat, [420, 320])
+                window.blit(text_surface_villian_and_hat_2, [420, 340])
+
+            if hat_rect.collidepoint(mouse_pos):
+                window.blit(dialog_window_img, [400, 300])
+                window.blit(text_surface_villian_and_hat_3, [420, 320])
+
+            if bag_lightning_rect.collidepoint(mouse_pos):
+                window.blit(dialog_window_img, [400, 300])
+                window.blit(text_surface_villian_and_hat_4, [410, 320])
+            
+            if old_watch_rect.collidepoint(mouse_pos):
+                window.blit(dialog_window_img, [400, 300])
+                window.blit(text_surface_villian_and_hat_5, [410, 320])
+                window.blit(text_surface_villian_and_hat_6, [410, 340])
 
         except NameError:
             pass # Игнорируем ошибку, если next_location_rect2 ещё не определён
