@@ -128,6 +128,14 @@ window_img = pygame.image.load('assets/images/компоненты локаци�
 lightning_bag = pygame.image.load('assets/images/компоненты локации/bag_for_lightnig.png') # символ в массиве "L"
 lightning_bag = pygame.transform.scale(lightning_bag, (70, 70))
 
+# шапки для злодей и шапка
+hat_img = pygame.image.load('assets/images/компоненты локации/hat.png') # символ в массиве "п"
+hat_img = pygame.transform.scale(hat_img, (70, 70))
+
+hat2_img = pygame.image.load('assets/images/компоненты локации/hat2.png') # символ в массиве "ш"
+hat2_img = pygame.transform.scale(hat2_img, (70, 70))
+
+
 # плэйт позволяющий сменить локацию
 next_location = pygame.image.load('assets/images/компоненты локации/next_location.png') # символ в массиве "e" (латиница)
 
@@ -220,6 +228,10 @@ entrance_to_house_rect = entrance_to_house_btn.get_rect()
 entrance_to_house_rect.x = WIDTH // 2 - (entrance_to_house_rect.width//2)
 entrance_to_house_rect.y = HEIGHT // 2 - (entrance_to_house_rect.height//2) 
 
+# диалоговое окно
+dialog_window_img = pygame.image.load('assets/images/interface/dialog_window.png') 
+show_dialog = False
+
 # Фон просмотра управления
 management_bg = pygame.image.load('assets/images/backgrounds/менюшки/management_bg.png')
 
@@ -241,6 +253,9 @@ fool_and_lightning = pygame.transform.scale(fool_and_lightning, [100, 100])
 fool_and_lightning_rect = fool_and_lightning.get_rect()
 fool_and_lightning_rect.x = WIDTH-400
 fool_and_lightning_rect.y = 250 # 150
+
+# шрифты
+cyrillic_old_font = pygame.font.Font('assets/fonts/CyrillicOld.otf', 24)
 
 villain_and_hat_map = [
     'sbbbbbbbbbbbbbsbbbbbbbbbsbbbsss',
@@ -283,7 +298,7 @@ villain_and_hat_map_3 = [
     '                                                                                                             ',
     '                                                                                                             ',
     '                                                                                                             ',
-    '                                                                                                             ',
+    '   %    $$     $%   %      $$ %     %    $     $ %    %%    $    %   $   $      $%      $         %%   $     ',
     'ggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg',
     'ззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззз',
     'ззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззззз',
@@ -298,8 +313,8 @@ villain_and_hat_map_4 = [
     'sssssssssssssssssssssssssssssssssssssssssssssssssssst                                           ',
     'sssssssssssssssssssssssssssssssssssssssssssssssssssst                                           ',
     'sssssssssssssssssssssssssssssssssssssssssssssssssssst                                           ',
-    'ssssssssssssssssssssssssssssssssssssssssssssssssssss1           h                               ',
-    'ssssssssssssssssssssssssssssssssssssssssssssssssssss2           hhL&                            ',
+    'ssssssssssssssssssssssssssssssssssssssssssssssssssss1           h          п ш                  ',
+    'ssssssssssssssssssssssssssssssssssssssssssssssssssss2           hhL&       h h                  ',
     'ссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссccccccc',
     'ссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссccccccc',
     'ссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссссccccccc',
@@ -329,6 +344,7 @@ walls = []
 windows = []
 chests = []
 bags = []
+hats = []
 map_now = villain_and_hat_map
 # run = False
 # frame = 0
@@ -642,6 +658,18 @@ while True:
                     bag_lightning_rect.y = bag_lightning_rect.height * i + testy
                     bags.append(lightning_bag)
                     window.blit(lightning_bag, bag_lightning_rect)
+                elif map_now[i][j] == 'п':
+                    hat_rect = hat_img.get_rect()
+                    hat_rect.x = hat_rect.width * j + test
+                    hat_rect.y = hat_rect.height * i + testy
+                    hats.append(hat_img)
+                    window.blit(hat_img, hat_rect)
+                elif map_now[i][j] == 'ш':
+                    hat2_rect = hat2_img.get_rect()
+                    hat2_rect.x = hat2_rect.width * j + test
+                    hat2_rect.y = hat2_rect.height * i + testy
+                    hats.append(hat2_img)
+                    window.blit(hat2_img, hat2_rect)
                     
     if villian_and_hat_lvl:
         # Перемещаем проверку столкновения внутрь блока villian_and_hat_lvl
@@ -674,8 +702,6 @@ while True:
                 map_now = villain_and_hat_map_4
                 bg_now_coords_x = 0
                 change_x = 50
-                
-
 
         except NameError:
             pass # Игнорируем ошибку, если next_location_rect2 ещё не определён
